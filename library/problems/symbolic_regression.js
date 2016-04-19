@@ -50,14 +50,11 @@ var SymbolicRegression = module.exports = function() {
  * @param {FitnessCase} test
  * The fitness case to evaluate. (`case` is a reserved word.)
  *
- * @return {Promise<number>}
- * A promise that resolves with the difference between the expected value and
- * the actual value.
+ * @return {number}
+ * The difference between the expected value and the actual value.
  */
 var error = SymbolicRegression.error = function(program, test) {
-  return evaluate(program, test.inputs).then(function(actual) {
-    return Math.abs(actual - test.output);
-  });
+  return Math.abs(evaluate(program, test.inputs) - test.output);
 };
 
 /**
@@ -70,16 +67,15 @@ var error = SymbolicRegression.error = function(program, test) {
  * @param {Array.<FitnessCase>} tests
  * The fitness cases to evaluate.
  *
- * @return {Promise<number>}
- * A promise that resolves with the result of the evaluation (i.e. the sum of
- * the errors).
+ * @return {number}
+ * The fitness of the program (i.e. the sum of the errors on the test cases).
  */
 var fitness = SymbolicRegression.fitness = function(program, tests) {
-  return Promise.all(tests.map(function(test) {
-    return error(program, test);
-  })).then(function(results) {
-    return results.reduce(function(previous, current) {
-      return previous + current;
-    }, 0);
-  });
+  var sum = 0;
+
+  for (var index in tests) {
+    sum += error(program, tests[index]);
+  }
+
+  return sum;
 };

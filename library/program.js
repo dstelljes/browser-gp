@@ -25,56 +25,50 @@
  * @param {Object.<string, number>} [values={}]
  * Variable substitutions keyed by name.
  *
- * @return {Promise<number>}
- * A promise that resolves with the result of the evaluation.
+ * @return {number}
+ * The result of the evaluation.
  */
 var evaluate = module.exports.evaluate = function(program, values) {
   if (typeof values === 'undefined') values = {};
 
-  return new Promise(function(resolve, reject) {
-    var stack = [];
+  var stack = [];
 
-    cursor:
-    for (var i = program.length - 1; i >= 0; i--) {
-      var primitive = program[i];
+  for (var i = program.length - 1; i >= 0; i--) {
+    var primitive = program[i];
 
-      switch (typeof primitive) {
-        case 'function':
-          var operands = [];
+    switch (typeof primitive) {
+      case 'function':
+        var operands = [];
 
-          for (var j = 0; j < primitive.length; j++) {
-            if (stack.length < 1) {
-              reject(new Error('Not enough arguments for function at index ' + i));
-              break cursor;
-            }
-
-            operands.push(stack.pop());
+        for (var j = 0; j < primitive.length; j++) {
+          if (stack.length < 1) {
+            throw new Error('Not enough arguments for function at index ' + i);
           }
 
-          stack.push(primitive.apply(undefined, operands));
+          operands.push(stack.pop());
+        }
 
-          break;
+        stack.push(primitive.apply(undefined, operands));
+        break;
 
-        case 'number':
-          stack.push(primitive);
-          break;
+      case 'number':
+        stack.push(primitive);
+        break;
 
-        case 'string':
-          var value = values[primitive];
+      case 'string':
+        var value = values[primitive];
 
-          if (typeof value === 'undefined') {
-            reject(new Error('Unexpected variable ' + primitive + ' at index ' + i));
-            break cursor;
-          }
+        if (typeof value === 'undefined') {
+          throw new Error('Unexpected variable ' + primitive + ' at index ' + i);
+        }
 
-          stack.push(value);
-          break;
+        stack.push(value);
+        break;
 
-        default:
-          reject(new Error('Invalid primitive at index ' + i));
-      }
+      default:
+        throw new Error('Invalid primitive at index ' + i);
     }
+  }
 
-    resolve(stack.pop());
-  });
+  return stack.pop();
 };

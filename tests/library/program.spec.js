@@ -28,29 +28,29 @@ describe('program evaluation', function() {
   // (- 1 (* 2 (^ (sin x) 2)))
   var identity = [sub, 1, mul, 2, exp, sin, 'x', 2];
 
-  it('correctly evaluates a program with one variable', function(done) {
-    program.evaluate(base, {
+  it('correctly evaluates a program with one variable', function() {
+    var result = program.evaluate(base, {
       x: 8
-    }).then(function(result) {
-      expect(result).toBe(2);
-    }).then(done);
+    });
+
+    expect(result).toBe(2);
   });
 
-  it('correctly evaluates a program with several variables', function(done) {
-    program.evaluate(polynomial, {
+  it('correctly evaluates a program with several variables', function() {
+    var result = program.evaluate(polynomial, {
       x: 1,
       y: 2,
       z: 0
-    }).then(function(result) {
-      expect(result).toBe(11);
-    }).then(done);
+    });
+
+    expect(result).toBe(11);
   });
 
-  it('correctly evaluates a program with functions of different arities', function(done) {
-    program.evaluate(identity, {
+  it('correctly evaluates a program with functions of different arities', function() {
+    var result = program.evaluate(identity, {
       x: Math.PI
-    }).then(function(result) {
-      expect(result).toBe(1);
-    }).then(done);
+    });
+
+    expect(result).toBe(1);
   });
 });
