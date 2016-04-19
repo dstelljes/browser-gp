@@ -7,7 +7,9 @@
 
 /**
  * Adds the two parameters.
- * @module functions/addition
+ *
+ * @function
+ * @memberof functions
  *
  * @param {number} a
  * @param {number} b

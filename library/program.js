@@ -9,6 +9,10 @@
  * are constants, and strings are variables.
  */
 
+/**
+ * @module program
+ */
+
 'use strict';
 
 /**
@@ -16,6 +20,8 @@
  *
  * This exploits a few convenient features of JavaScript, namely the `typeof`
  * operator and the fact that `.length` on a function will return its arity.
+ *
+ * @function
  *
  * @see https://en.wikipedia.org/wiki/Polish_notation
  *

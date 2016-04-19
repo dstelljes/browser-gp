@@ -7,7 +7,9 @@
 
 /**
  * Raises the first parameter to the second parameter power.
- * @module functions/exponentiation
+ *
+ * @function
+ * @memberof functions
  *
  * @param {number} a
  * @param {number} b

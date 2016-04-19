@@ -5,11 +5,11 @@
 
 'use strict';
 
-var SymbolicRegression = require('../../../library/problems/symbolic_regression');
+var gp = require('../../library');
 
 describe('symbolic regression problem', function() {
   it('correctly calulates fitness', function() {
-    var fitness = SymbolicRegression.fitness(['x'], [{
+    var fitness = gp.SymbolicRegression.fitness(['x'], [{
       inputs: {
         x: -2
       },

@@ -8,7 +8,9 @@
 /**
  * Finds the logarithm of the first parameter with respect to the base of the
  * second parameter.
- * @module functions/logarithm
+ *
+ * @function
+ * @memberof functions
  *
  * @param {number} a
  * @param {number} b

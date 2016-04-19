@@ -7,7 +7,9 @@
 
 /**
  * Takes the sine of the first parameter.
- * @module functions/sine
+ *
+ * @function
+ * @memberof functions
  *
  * @param {number} a
  *

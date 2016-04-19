@@ -1,6 +1,7 @@
 {
   "name": "browser-gp",
   "version": "0.0.1",
+  "main": "library/index.js",
   "scripts": {
     "test": "jasmine JASMINE_CONFIG_PATH=tests/jasmine.json"
   },

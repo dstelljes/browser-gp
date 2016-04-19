@@ -5,17 +5,21 @@
 
 'use strict';
 
-var program = require('../../library/program');
+var gp = require('../../library');
 
-var add = require('../../library/functions/addition');
-var sub = require('../../library/functions/subtraction');
-var mul = require('../../library/functions/multiplication');
-var div = require('../../library/functions/division');
-var exp = require('../../library/functions/exponentiation');
-var log = require('../../library/functions/logarithm');
-var sin = require('../../library/functions/sine');
+var add = gp.functions.addition;
+var sub = gp.functions.subtraction;
+var mul = gp.functions.multiplication;
+var div = gp.functions.division;
+var exp = gp.functions.exponentiation;
+var log = gp.functions.logarithm;
+var sin = gp.functions.sine;
 
 describe('program evaluation', function() {
+  // (3 + 6) / 9
+  // (/ (+ 3 6) 9)
+  var boring = [div, add, 3, 6, 9];
+
   // lg(64) / lg(x)
   // (/ (log 64 2) (log x 2))
   var base = [div, log, 64, 2, log, 'x', 2];
@@ -28,8 +32,13 @@ describe('program evaluation', function() {
   // (- 1 (* 2 (^ (sin x) 2)))
   var identity = [sub, 1, mul, 2, exp, sin, 'x', 2];
 
+  it('correctly evaluates a program with no variables', function() {
+    var result = gp.program.evaluate(boring);
+    expect(result).toBe(1);
+  });
+
   it('correctly evaluates a program with one variable', function() {
-    var result = program.evaluate(base, {
+    var result = gp.program.evaluate(base, {
       x: 8
     });
 
@@ -37,7 +46,7 @@ describe('program evaluation', function() {
   });
 
   it('correctly evaluates a program with several variables', function() {
-    var result = program.evaluate(polynomial, {
+    var result = gp.program.evaluate(polynomial, {
       x: 1,
       y: 2,
       z: 0
@@ -47,7 +56,7 @@ describe('program evaluation', function() {
   });
 
   it('correctly evaluates a program with functions of different arities', function() {
-    var result = program.evaluate(identity, {
+    var result = gp.program.evaluate(identity, {
       x: Math.PI
     });
 

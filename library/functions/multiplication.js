@@ -7,7 +7,9 @@
 
 /**
  * Multiplies the two parameters.
- * @module functions/multiplication
+ *
+ * @function
+ * @memberof functions
  *
  * @param {number} a
  * @param {number} b

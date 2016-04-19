@@ -7,7 +7,9 @@
 
 /**
  * Divides the first parameter by the second.
- * @module functions/division
+ *
+ * @function
+ * @memberof functions
  *
  * @param {number} a
  * @param {number} b

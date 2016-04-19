@@ -26,15 +26,15 @@
 
 'use strict';
 
-var evaluate = require('../program').evaluate;
+var evaluate = require('./program').evaluate;
 
 /**
+ * Constructs a symbolic regression instance.
+ *
  * @class SymbolicRegression
  * @classdesc
  * Defines a symbolic regression problem. Uses a set of expressions to evolve a
  * model that matches a collection of inputs/outputs.
- *
- * Constructs a symbolic regression instance.
  */
 var SymbolicRegression = module.exports = function() {
   //
@@ -42,6 +42,7 @@ var SymbolicRegression = module.exports = function() {
 
 /**
  * Calculates the error of a program on a target case.
+ * @function
  * @memberof SymbolicRegression
  *
  * @param {Program} program
@@ -59,6 +60,7 @@ var error = SymbolicRegression.error = function(program, test) {
 
 /**
  * Evaluates the fitness of a program for a set of target cases.
+ * @function
  * @memberof SymbolicRegression
  *
  * @param {Program} program

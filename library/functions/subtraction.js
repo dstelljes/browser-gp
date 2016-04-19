@@ -7,7 +7,9 @@
 
 /**
  * Subtracts the second parameter from the first.
- * @module functions/subtraction
+ *
+ * @function
+ * @memberof functions
  *
  * @param {number} a
  * @param {number} b
