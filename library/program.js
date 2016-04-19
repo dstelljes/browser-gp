@@ -3,11 +3,11 @@
  * Contains program utility functions.
  */
 
- /**
-  * @typedef {Array.<(function|number|string)>} Program
-  * A program represented in prefix notation. Functions are functions, numbers
-  * are constants, and strings are variables.
-  */
+/**
+ * @typedef {Array.<(function|number|string)>} Program
+ * A program represented in prefix notation. Functions are functions, numbers
+ * are constants, and strings are variables.
+ */
 
 'use strict';
 
