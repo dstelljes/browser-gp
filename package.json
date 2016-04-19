@@ -1,0 +1,13 @@
+{
+  "name": "browser-gp",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "jasmine JASMINE_CONFIG_PATH=tests/jasmine.json"
+  },
+  "author": "Dan Stelljes <dan@stellj.es>",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^2.4.1",
+    "jsdoc": "^3.4.0"
+  }
+}
