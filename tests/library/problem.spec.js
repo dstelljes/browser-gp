@@ -1,15 +1,15 @@
 /**
  * @file
- * Tests the symbolic regression functions.
+ * Tests the problem functions.
  */
 
 'use strict';
 
 var gp = require('../../library');
 
-describe('symbolic regression problem', function() {
+describe('problem', function() {
   it('correctly calulates fitness', function() {
-    var fitness = gp.SymbolicRegression.fitness(['x'], [{
+    var fitness = gp.Problem.fitness(['x'], [{
       inputs: {
         x: -2
       },

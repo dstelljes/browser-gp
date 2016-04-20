@@ -8,5 +8,5 @@
 module.exports = {
   functions: require('./functions'),
   program: require('./program'),
-  SymbolicRegression: require('./symbolic_regression')
+  Problem: require('./problem')
 };

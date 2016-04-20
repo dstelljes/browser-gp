@@ -1,8 +1,6 @@
 /**
  * @file
- * Contains the symbolic regression problem type.
- *
- * @since 2016-04-19
+ * Contains the problem class.
  */
 
 /**
@@ -29,21 +27,22 @@
 var evaluate = require('./program').evaluate;
 
 /**
- * Constructs a symbolic regression instance.
+ * Constructs a problem instance.
  *
- * @class SymbolicRegression
+ * @class Program
  * @classdesc
  * Defines a symbolic regression problem. Uses a set of expressions to evolve a
  * model that matches a collection of inputs/outputs.
  */
-var SymbolicRegression = module.exports = function() {
+var Program = module.exports = function() {
   //
 };
 
 /**
  * Calculates the error of a program on a target case.
+ *
  * @function
- * @memberof SymbolicRegression
+ * @memberof Program
  *
  * @param {Program} program
  * A program respresentation.
@@ -54,14 +53,15 @@ var SymbolicRegression = module.exports = function() {
  * @return {number}
  * The difference between the expected value and the actual value.
  */
-var error = SymbolicRegression.error = function(program, test) {
+var error = Program.error = function(program, test) {
   return Math.abs(evaluate(program, test.inputs) - test.output);
 };
 
 /**
  * Evaluates the fitness of a program for a set of target cases.
+ *
  * @function
- * @memberof SymbolicRegression
+ * @memberof Program
  *
  * @param {Program} program
  * A program respresentation.
@@ -72,7 +72,7 @@ var error = SymbolicRegression.error = function(program, test) {
  * @return {number}
  * The fitness of the program (i.e. the sum of the errors on the test cases).
  */
-var fitness = SymbolicRegression.fitness = function(program, tests) {
+var fitness = Program.fitness = function(program, tests) {
   var sum = 0;
 
   for (var index in tests) {
