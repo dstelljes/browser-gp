@@ -8,7 +8,7 @@
   "author": "Dan Stelljes <dan@stellj.es>",
   "license": "MIT",
   "devDependencies": {
-    "jasmine": "^2.4.1",
-    "jsdoc": "^3.4.0"
+    "css-brunch": "^2.6.1",
+    "javascript-brunch": "^2.0.0"
   }
 }
