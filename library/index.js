@@ -6,6 +6,7 @@
 'use strict';
 
 module.exports = {
+  fitness: require('./fitness'),
   functions: require('./functions'),
   program: require('./program'),
   Problem: require('./problem')

@@ -1,6 +1,6 @@
 /**
  * @file
- * Provides the functions module.
+ * Provides the functions index.
  */
 
 'use strict';

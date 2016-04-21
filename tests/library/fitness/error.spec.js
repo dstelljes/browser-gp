@@ -1,15 +1,15 @@
 /**
  * @file
- * Tests the problem functions.
+ * Tests the |actual - expected| fitness measure.
  */
 
 'use strict';
 
-var gp = require('../../library');
+var gp = require('../../../library');
 
-describe('problem', function() {
+describe('error fitness measure', function() {
   it('correctly calulates fitness', function() {
-    var fitness = gp.Problem.fitness(['x'], [{
+    var fitness = gp.fitness.error(['x'], [{
       inputs: {
         x: -2
       },
