@@ -7,16 +7,22 @@ module.exports = {
   files: {
     javascripts: {
       joinTo: {
-        'app.js': /^frontend\/scripts\//,
-        'vendor.js': [
-          'bower_components/angular/angular.js'
+        'js/dashboard.js': /^frontend\/scripts\//,
+        'js/vendor.js': [
+          'bower_components/angular/angular.js',
+          'bower_components/angular-ui-router/release/angular-ui-router.js'
         ]
       }
     },
     stylesheets: {
       joinTo: {
-        'app.css': /^frontend\/styles\//
+        'css/dashboard.css': 'frontend/styles/dashboard.scss'
       }
+    }
+  },
+  modules: {
+    nameCleaner: function(path) {
+      return path.replace(/^frontend\/scripts\//, '');
     }
   },
   paths: {

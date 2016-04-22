@@ -3,12 +3,15 @@
   "version": "0.0.1",
   "main": "library/index.js",
   "scripts": {
-    "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json"
+    "test": "node_modules/.bin/jasmine JASMINE_CONFIG_PATH=jasmine.json"
   },
   "author": "Dan Stelljes <dan@stellj.es>",
   "license": "MIT",
   "devDependencies": {
-    "css-brunch": "^2.6.1",
-    "javascript-brunch": "^2.0.0"
+    "brunch": "^2.7.1",
+    "jasmine": "^2.4.1",
+    "javascript-brunch": "^2.0.0",
+    "jsdoc": "^3.4.0",
+    "sass-brunch": "^2.6.2"
   }
 }
