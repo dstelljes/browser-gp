@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 
-<head>
-  <meta charset="utf-8">
-  <title>Browser GP</title>
-</head>
+<html lang="en" ng-app="dashboard">
+  <head>
+    <meta charset="utf-8">
+    <title>Browser GP</title>
 
-<body ng-app="dashboard">
-  <div ng-view></div>
+    <link href="css/dashboard.css" rel="stylesheet" type="text/css" />
+  </head>
 
-  <script type="text/javascript" src="js/vendor.js"></script>
-  <script type="text/javascript" src="js/dashboard.js"></script>
+  <body>
+    <div ui-view></div>
 
-  <script type="text/javascript">
-    // Bootstrap the app:
-    require('dashboard');
-  </script>
-</body>
+    <script type="text/javascript" src="js/vendor.js"></script>
+    <script type="text/javascript" src="js/gp.js"></script>
+    <script type="text/javascript" src="js/dashboard.js"></script>
+
+    <script type="text/javascript">
+      // Bootstrap the app:
+      require('dashboard');
+    </script>
+  </body>
+</html>

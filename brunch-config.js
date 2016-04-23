@@ -7,7 +7,8 @@ module.exports = {
   files: {
     javascripts: {
       joinTo: {
-        'js/dashboard.js': /^frontend\/scripts\//,
+        'js/dashboard.js': /^frontend\/modules\/dashboard\//,
+        'js/gp.js': /^library\//,
         'js/vendor.js': [
           'bower_components/angular/angular.js',
           'bower_components/angular-ui-router/release/angular-ui-router.js'
@@ -22,12 +23,17 @@ module.exports = {
   },
   modules: {
     nameCleaner: function(path) {
-      return path.replace(/^frontend\/scripts\//, '');
+      return path.replace(/^frontend\/modules\//, '');
+    }
+  },
+  npm: {
+    globals: {
+      gp: './library'
     }
   },
   paths: {
     public: 'build',
-    watched: ['bower_components', 'frontend']
+    watched: ['bower_components', 'frontend', 'library']
   },
   server: {
     noPushState: true,

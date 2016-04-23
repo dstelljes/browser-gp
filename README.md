@@ -3,7 +3,7 @@ browser-gp
 
 This project is an attempt at a browser-based genetic programming system. It's
 inspired in part by [TinyGP][tinygp] and was initially developed by
-[Tom Harren][tom] and [Dan Stelljes][dan] for [Nic McPhee's][nic] Evolutionary
+[Tom Harren][tom] and [Dan Stelljes][dan] for [Nic McPhee][nic]'s Evolutionary
 Computation class at [UMM][mo-sweet-mo].
 
 Building
@@ -11,13 +11,18 @@ Building
 
 Currently, the core library has no external dependencies.
 
-To run tests, make sure [Jasmine][jasmine] is installed (`npm install -g
-jasmine`) and run `npm test`. You should observe a series of green dots as the
-tests pass flawlessly.
+If you want to...
 
-To generate documentation, ensure that you have [JSDoc][jsdoc] (`npm install -g
-jsdoc`) and run `jsdoc -c jsdoc.json`. HTML documentation for the library will
-appear in the `build/api` directory.
+*   build the web frontend: `npm install` to install tooling, `bower install`
+    to install frontend dependencies, and `brunch watch --server` to serve the
+    app locally. Requires [Brunch][brunch].
+
+*   run tests: `npm test`. Requires [Jasmine][jasmine].
+
+*   generate documentation: `jsdoc -c jsdoc.json`. Requires [JSDoc][jsdoc].
+
+Build artifacts (documentaion and frontend files) are dumped into the `build`
+directory.
 
 License
 --
@@ -25,6 +30,7 @@ License
 Project code is released under the MIT License, the Denny's of free software
 licenses.
 
+[brunch]: http://brunch.io/
 [dan]: https://github.com/dstelljes
 [jasmine]: https://jasmine.github.io/
 [jsdoc]: http://usejsdoc.org/
