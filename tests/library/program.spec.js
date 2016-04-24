@@ -32,12 +32,12 @@ describe('program evaluation', function() {
   // (- 1 (* 2 (^ (sin x) 2)))
   var identity = [sub, 1, mul, 2, exp, sin, 'x', 2];
 
-  it('correctly evaluates a program with no variables', function() {
+  it('evaluates a program with no variables', function() {
     var result = gp.program.evaluate(boring);
     expect(result).toBe(1);
   });
 
-  it('correctly evaluates a program with one variable', function() {
+  it('evaluates a program with one variable', function() {
     var result = gp.program.evaluate(base, {
       x: 8
     });
@@ -45,7 +45,7 @@ describe('program evaluation', function() {
     expect(result).toBe(2);
   });
 
-  it('correctly evaluates a program with several variables', function() {
+  it('evaluates a program with several variables', function() {
     var result = gp.program.evaluate(polynomial, {
       x: 1,
       y: 2,
@@ -55,11 +55,34 @@ describe('program evaluation', function() {
     expect(result).toBe(11);
   });
 
-  it('correctly evaluates a program with functions of different arities', function() {
+  it('evaluates a program with functions of different arities', function() {
     var result = gp.program.evaluate(identity, {
       x: Math.PI
     });
 
     expect(result).toBe(1);
+  });
+});
+
+describe('subtree extraction', function() {
+  // (+ 2 3)
+  var simple = [add, 2, 3];
+
+  // (+ (- 1 2) 3)
+  var nested = [add, sub, 1, 2, 3];
+
+  // (/ (log 64 2) (log x 2))
+  var base = [div, log, 64, 2, log, 'x', 2];
+
+  it('extracts a one-node subtree', function() {
+    expect(gp.program.subtree(simple, 1)).toEqual([2]);
+  });
+
+  it('extracts a multiple-node subtree', function() {
+    expect(gp.program.subtree(nested, 1)).toEqual([sub, 1, 2]);
+  });
+
+  it('returns the entire tree when given the root', function() {
+    expect(gp.program.subtree(base, 0)).toEqual(base);
   });
 });

@@ -18,9 +18,6 @@
 /**
  * Evaluates a program with the specified values.
  *
- * This exploits a few convenient features of JavaScript, namely the `typeof`
- * operator and the fact that `.length` on a function will return its arity.
- *
  * @function
  *
  * @see https://en.wikipedia.org/wiki/Polish_notation
@@ -77,4 +74,40 @@ var evaluate = module.exports.evaluate = function(program, values) {
   }
 
   return stack.pop();
+};
+
+/**
+ * Returns the program subtree rooted at a given point.
+ *
+ * @function
+ *
+ * @param {Program} program
+ * A program representation.
+ *
+ * @param {number} root
+ * The index of the root node.
+ *
+ * @return {Program}
+ * The resulting program subtree.
+ */
+var subtree = module.exports.subtree = function(program, root) {
+  var counter = 1, pointer = root, tree = [];
+
+  while (counter > 0) {
+    if (pointer >= program.length) {
+      throw new Error('Invalid program');
+    }
+
+    var primitive = program[pointer];
+    tree.push(primitive);
+
+    if (typeof primitive === 'function') {
+      counter += primitive.length;
+    }
+
+    counter--;
+    pointer++;
+  }
+
+  return tree;
 };

@@ -21,7 +21,7 @@ If you want to...
 
 *   generate documentation: `jsdoc -c jsdoc.json`. Requires [JSDoc][jsdoc].
 
-Build artifacts (documentaion and frontend files) are dumped into the `build`
+Build artifacts (documentation and frontend files) are dumped into the `build`
 directory.
 
 License
