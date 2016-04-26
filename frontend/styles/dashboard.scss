@@ -1,1 +1,25 @@
 @import 'global';
+
+.brand {
+  background-color: $darker-blue;
+  color: $white;
+  font-size: 1.5em;
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+
+  .pane {
+    max-height: 100%;
+    overflow: auto;
+  }
+}
+
+.sidebar {
+  background-color: $light-blue;
+  width: 16em;
+}

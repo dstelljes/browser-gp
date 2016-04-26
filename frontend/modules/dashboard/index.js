@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dashboard', ['ui.router']).config(function($stateProvider, $urlRouterProvider) {
+angular.module('dashboard', ['ngStorage', 'ui.router']).config(function($stateProvider, $urlRouterProvider) {
   $stateProvider.state('problem', {
     controller: require('./controllers/problem'),
     templateUrl: 'partials/dashboard.problem.html',

@@ -1,5 +1,7 @@
 'use strict';
 
-module.exports = function($scope) {
-
+module.exports = function($localStorage, $scope) {
+  $scope.persistent = $localStorage.$default({
+    problems: {}
+  });
 };

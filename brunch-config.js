@@ -11,7 +11,8 @@ module.exports = {
         'js/gp.js': /^library\//,
         'js/vendor.js': [
           'bower_components/angular/angular.js',
-          'bower_components/angular-ui-router/release/angular-ui-router.js'
+          'bower_components/angular-ui-router/release/angular-ui-router.js',
+          'bower_components/ngstorage/ngStorage.js'
         ]
       }
     },

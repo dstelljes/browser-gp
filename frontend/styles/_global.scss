@@ -1,9 +1,19 @@
+@import 'colors';
+@import 'fonts';
+
 *, *:before, *:after {
   box-sizing: inherit;
 }
 
 body {
+  color: $black;
+  font-family: $body-font-family;
+  font-size: $base-size;
   margin: 0;
+}
+
+h1, h2, h3 {
+  font-weight: 300;
 }
 
 html {
