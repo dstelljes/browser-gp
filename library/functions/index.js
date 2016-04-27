@@ -10,11 +10,16 @@
  */
 
 module.exports = {
+  // Numeric functions:
   addition: require('./addition'),
   division: require('./division'),
   exponentiation: require('./exponentiation'),
   logarithm: require('./logarithm'),
   multiplication: require('./multiplication'),
   sine: require('./sine'),
-  subtraction: require('./subtraction')
+  subtraction: require('./subtraction'),
+
+  // String functions:
+  concatenation: require('./concatenation'),
+  count: require('./count')
 };
