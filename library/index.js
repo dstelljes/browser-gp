@@ -8,6 +8,7 @@
 module.exports = {
   fitness: require('./fitness'),
   functions: require('./functions'),
+  operators: require('./operators'),
   program: require('./program'),
   random: require('./random'),
   PRNG: require('./prng'),

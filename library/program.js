@@ -90,8 +90,32 @@ var evaluate = module.exports.evaluate = function(program, values) {
  * @return {Program}
  * The resulting program subtree.
  */
-var subtree = module.exports.subtree = function(program, root) {
-  var counter = 1, pointer = root, tree = [];
+var extractSubtree = module.exports.extractSubtree = function(program, root) {
+  var tree = [];
+
+  for (var i = root; i < root + findSubtreeLength(program, root); i++) {
+    tree.push(program[i]);
+  }
+
+  return tree;
+};
+
+/**
+ * Finds the length of a subtree rooted at a given point.
+ *
+ * @function
+ *
+ * @param {Program} program
+ * A program representation.
+ *
+ * @param {number} root
+ * The index of the root node.
+ *
+ * @return {Program}
+ * The length of the subtree.
+ */
+var findSubtreeLength = module.exports.findSubtreeLength = function(program, root) {
+  var counter = 1, pointer = root;
 
   while (counter > 0) {
     if (pointer >= program.length) {
@@ -99,15 +123,14 @@ var subtree = module.exports.subtree = function(program, root) {
     }
 
     var primitive = program[pointer];
-    tree.push(primitive);
 
     if (typeof primitive === 'function') {
-      counter += primitive.length;
+      counter += primitive.length; //returns the number of args that the primitve takes
     }
 
     counter--;
     pointer++;
   }
 
-  return tree;
+  return pointer - root;
 };
