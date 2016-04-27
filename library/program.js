@@ -4,9 +4,9 @@
  */
 
 /**
- * @typedef {Array.<(function|number|string)>} Program
+ * @typedef {Array.<(function|number|string|symbol)>} Program
  * A program represented in prefix notation. Functions are functions, numbers
- * are constants, and strings are variables.
+ * and strings are constants, and symbols are variables.
  */
 
 /**
@@ -55,14 +55,15 @@ var evaluate = module.exports.evaluate = function(program, values) {
         break;
 
       case 'number':
+      case 'string':
         stack.push(primitive);
         break;
 
-      case 'string':
+      case 'symbol':
         var value = values[primitive];
 
         if (typeof value === 'undefined') {
-          throw new Error('Unexpected variable ' + primitive + ' at index ' + i);
+          throw new Error('Unexpected variable at index ' + i);
         }
 
         stack.push(value);
