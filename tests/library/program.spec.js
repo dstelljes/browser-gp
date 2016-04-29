@@ -75,14 +75,14 @@ describe('subtree extraction', function() {
   var base = [div, log, 64, 2, log, 'x', 2];
 
   it('extracts a one-node subtree', function() {
-    expect(gp.program.subtree(simple, 1)).toEqual([2]);
+    expect(gp.program.extractSubtree(simple, 1)).toEqual([2]);
   });
 
   it('extracts a multiple-node subtree', function() {
-    expect(gp.program.subtree(nested, 1)).toEqual([sub, 1, 2]);
+    expect(gp.program.extractSubtree(nested, 1)).toEqual([sub, 1, 2]);
   });
 
   it('returns the entire tree when given the root', function() {
-    expect(gp.program.subtree(base, 0)).toEqual(base);
+    expect(gp.program.extractSubtree(base, 0)).toEqual(base);
   });
 });
