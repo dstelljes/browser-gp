@@ -16,6 +16,7 @@ module.exports = {
   exponentiation: require('./exponentiation'),
   logarithm: require('./logarithm'),
   multiplication: require('./multiplication'),
+  protectedDivision: require('./protected_division'),
   sine: require('./sine'),
   subtraction: require('./subtraction'),
 
