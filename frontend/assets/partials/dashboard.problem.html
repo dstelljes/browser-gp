@@ -1,16 +1,26 @@
 <div class="dashboard">
   <div class="sidebar pane">
     <h1 class="brand">
-      browser-gp
+      <a ui-sref="problem">
+        browser-gp
+      </a>
     </h1>
 
-    <ul class="problem-nav">
-      <li ng-repeat="(id, problem) in persistent.problems">
+    <button class="problem-add button" type="button" ng-click="addProblem()">
+      New problem
+    </button>
 
+    <ul class="problem-nav">
+      <li ng-repeat="(id, problem) in problems">
+        <a class="problem-item" ui-sref="problem.detail({ id: id })" ui-sref-active="active">
+          <i ng-if="!problem.name">{{ id }}</i>
+          {{ problem.name }}
+        </a>
       </li>
     </ul>
   </div>
 
   <div class="body pane">
+    <div ui-view></div>
   </div>
 </div>

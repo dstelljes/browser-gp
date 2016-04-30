@@ -1,0 +1,44 @@
+.button {
+  border: 0;
+  cursor: pointer;
+  font-family: $body-font-family;
+  padding: 0.5em 1em;
+  transition: 0.25s all;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &.default {
+    background-color: $lighter-gray;
+    border: 1px solid darken($lighter-gray, 10%);
+    color: $white;
+
+    &:hover {
+      background-color: darken($lighter-gray, 5%);
+    }
+  }
+
+  &.ui {
+    border-radius: 3px;
+  }
+}
+
+.input {
+  font-family: $body-font-family;
+
+  &.inconspicuous {
+    border-color: $lighter-gray;
+    border-width: 0 0 0.1em 0;
+    padding-bottom: 0.125em;
+    transition: 0.25s all;
+
+    &:focus, &:hover {
+      border-color: $dark-gray;
+    }
+  }
+
+  &.large {
+    font-size: 2.5em;
+  }
+}

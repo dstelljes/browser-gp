@@ -5,6 +5,10 @@
   box-sizing: inherit;
 }
 
+a:focus {
+  outline: 0;
+}
+
 body {
   color: $black;
   font-family: $body-font-family;
