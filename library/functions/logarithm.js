@@ -15,7 +15,7 @@
  * @param {number} a
  * @param {number} b
  *
- * @return {number}
+ * @returns {number}
  */
 var logarithm = module.exports = function(a, b) {
   return Math.log(a) / Math.log(b);
@@ -24,7 +24,7 @@ var logarithm = module.exports = function(a, b) {
 /**
  * Displays the operator symbol when stringified.
  *
- * @return {string}
+ * @returns {string}
  */
 logarithm.toString = function() {
   return 'log';

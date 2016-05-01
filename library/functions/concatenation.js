@@ -14,7 +14,7 @@
  * @param {string} a
  * @param {string} b
  *
- * @return {string}
+ * @returns {string}
  */
 var concatenation = module.exports = function(a, b) {
   return a + b;
@@ -23,7 +23,7 @@ var concatenation = module.exports = function(a, b) {
 /**
  * Displays the operator symbol when stringified.
  *
- * @return {string}
+ * @returns {string}
  */
 concatenation.toString = function() {
   return 'join';

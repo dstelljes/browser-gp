@@ -28,7 +28,7 @@
  * @param {Object.<string, number>} [values={}]
  * Variable substitutions keyed by name.
  *
- * @return {number}
+ * @returns {number}
  * The result of the evaluation.
  */
 var evaluate = module.exports.evaluate = function(program, values) {
@@ -88,7 +88,7 @@ var evaluate = module.exports.evaluate = function(program, values) {
  * @param {number} root
  * The index of the root node.
  *
- * @return {Program}
+ * @returns {Program}
  * The resulting program subtree.
  */
 var extractSubtree = module.exports.extractSubtree = function(program, root) {
@@ -112,7 +112,7 @@ var extractSubtree = module.exports.extractSubtree = function(program, root) {
  * @param {number} root
  * The index of the root node.
  *
- * @return {Program}
+ * @returns {Program}
  * The length of the subtree.
  */
 var findSubtreeLength = module.exports.findSubtreeLength = function(program, root) {

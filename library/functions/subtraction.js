@@ -14,7 +14,7 @@
  * @param {number} a
  * @param {number} b
  *
- * @return {number}
+ * @returns {number}
  */
 var subtraction = module.exports = function(a, b) {
   return a - b;
@@ -23,7 +23,7 @@ var subtraction = module.exports = function(a, b) {
 /**
  * Displays the operator symbol when stringified.
  *
- * @return {string}
+ * @returns {string}
  */
 subtraction.toString = function() {
   return '-';

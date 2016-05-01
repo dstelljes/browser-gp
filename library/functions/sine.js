@@ -13,14 +13,14 @@
  *
  * @param {number} a
  *
- * @return {number}
+ * @returns {number}
  */
 var sine = module.exports = Math.sin;
 
 /**
  * Displays the operator symbol when stringified.
  *
- * @return {string}
+ * @returns {string}
  */
 sine.toString = function() {
   return 'sin';

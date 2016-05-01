@@ -14,7 +14,7 @@
  * @param {number} a
  * @param {number} b
  *
- * @return {number}
+ * @returns {number}
  */
 var addition = module.exports = function(a, b) {
   return a + b;
@@ -23,7 +23,7 @@ var addition = module.exports = function(a, b) {
 /**
  * Displays the operator symbol when stringified.
  *
- * @return {string}
+ * @returns {string}
  */
 addition.toString = function() {
   return '+';

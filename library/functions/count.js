@@ -13,7 +13,7 @@
  *
  * @param {string} a
  *
- * @return {number}
+ * @returns {number}
  */
 var count = module.exports = function(a) {
   return a.length;
@@ -22,7 +22,7 @@ var count = module.exports = function(a) {
 /**
  * Displays the operator symbol when stringified.
  *
- * @return {string}
+ * @returns {string}
  */
 count.toString = function() {
   return 'count';

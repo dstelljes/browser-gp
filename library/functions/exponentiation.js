@@ -14,14 +14,14 @@
  * @param {number} a
  * @param {number} b
  *
- * @return {number}
+ * @returns {number}
  */
 var exponentiation = module.exports = Math.pow;
 
 /**
  * Displays the operator symbol when stringified.
  *
- * @return {string}
+ * @returns {string}
  */
 exponentiation.toString = function() {
   return '^';

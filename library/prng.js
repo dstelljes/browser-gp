@@ -5,7 +5,7 @@
 /**
  * Returns a random number in [0, 1).
  * @callback PRNG~source
- * @return {number}
+ * @returns {number}
  */
 
 'use strict';

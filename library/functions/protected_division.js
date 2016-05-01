@@ -14,7 +14,7 @@
  * @param {number} a
  * @param {number} b
  *
- * @return {number}
+ * @returns {number}
  */
 var protectedDivision = module.exports = function(a, b) {
   // Returning 1 rather than 0 is a conscious choice as it seems to create more
@@ -25,7 +25,7 @@ var protectedDivision = module.exports = function(a, b) {
 /**
  * Displays the operator symbol when stringified.
  *
- * @return {string}
+ * @returns {string}
  */
 protectedDivision.toString = function() {
   return '%';

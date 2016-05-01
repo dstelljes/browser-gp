@@ -19,7 +19,7 @@ var evaluate = require('../program').evaluate;
  * @param {Case} test
  * The fitness case to evaluate. (`case` is a reserved word.)
  *
- * @return {number}
+ * @returns {number}
  * The difference between the actual value and the expected value.
  */
 var difference = function(program, test) {
@@ -38,7 +38,7 @@ var difference = function(program, test) {
  * @param {Array.<Case>} tests
  * The fitness cases to evaluate.
  *
- * @return {number}
+ * @returns {number}
  * The sum of the errors on the given test cases.
  */
 var error = module.exports = function(program, tests) {
