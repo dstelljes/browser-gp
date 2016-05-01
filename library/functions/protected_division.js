@@ -16,14 +16,10 @@
  *
  * @return {number}
  */
-var division = module.exports = function(a, b) {
-  if(b == 0){
-    //returning 1 rather than 0 is a consious choice as it creates seems to create
-    //more interesting programs. Credit to Nic McPhee on this.
-      return 1;
-  }else{
-    return a / b;
-  }
+var protectedDivision = module.exports = function(a, b) {
+  // Returning 1 rather than 0 is a conscious choice as it seems to create more
+  // interesting programs. Credit to Nic McPhee on this.
+  return b === 0 ? 1 : a / b;
 };
 
 /**
@@ -31,6 +27,6 @@ var division = module.exports = function(a, b) {
  *
  * @return {string}
  */
-division.toString = function() {
-  return '/';
+protectedDivision.toString = function() {
+  return '%';
 };
