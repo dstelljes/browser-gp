@@ -16,7 +16,6 @@
 
 'use strict';
 
-var splice = Array.prototype.splice;
 var program = require('../program');
 
 /**
@@ -41,15 +40,11 @@ var crossover = module.exports = function(random) {
     var child = a.slice(0);
 
     // Get the replacement subtree from b:
-    var args = program.extractSubtree(b, bx);
+    var subtree = program.extractSubtree(b, bx);
 
-    // To build the arguments for splice, we're going to prepend the start and
-    // delete count arguments to the subtree array:
-    // @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
-    args.unshift(ax, program.findSubtreeLength(a, ax));
-
-    // Insert the replacement subtree on a:
-    splice.apply(child, args);
+    // Remove the old subtree and insert the replacement:
+    // @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator
+    child.splice(ax, program.findSubtreeLength(a, ax), ...subtree);
 
     return child;
   };
