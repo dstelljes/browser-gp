@@ -10,5 +10,6 @@
  */
 
 module.exports = {
+  full: require('./full'),
   grow: require('./grow')
 };
