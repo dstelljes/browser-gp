@@ -28,6 +28,14 @@ describe('PRNG class', function() {
     expect(wheel.double(-20, 20)).toBe(16);
   });
 
+  it('returns values from an array', function() {
+    var array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    expect(wheel.from(array)).toBe(1);
+    expect(wheel.from(array)).toBe(5);
+    expect(wheel.from(array)).toBe(9);
+  });
+
   it('returns integer values in range [0, upper)', function() {
     expect(wheel.integer(10)).toBe(1);
     expect(wheel.integer(5)).toBe(2);

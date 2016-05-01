@@ -10,5 +10,6 @@
  */
 
 module.exports = {
+  native: require('./native'),
   wheel: require('./wheel')
 };

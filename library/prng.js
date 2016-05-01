@@ -44,6 +44,17 @@ PRNG.prototype.double = function(lower, upper) {
 };
 
 /**
+ * Returns a random element from an array.
+ *
+ * @param {Array.<*>} array
+ *
+ * @returns {*}
+ */
+PRNG.prototype.from = function(array) {
+  return array[this.integer(0, array.length)];
+};
+
+/**
  * Returns a random integer in the range [lower, upper).
  *
  * @param {number} [lower=0]
