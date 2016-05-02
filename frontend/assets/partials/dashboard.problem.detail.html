@@ -3,20 +3,28 @@
   <button class="button ui default" ng-click="removeProblem()">Remove problem</button>
 </div>
 
-<div class="problem-runs section">
-  <div class="section-header">
-    <h2>Run summary</h2>
-    <button class="button ui default" ng-click="addRun()">Add run</button>
+<div ui-view>
+  <div class="problem-runs section">
+    <div class="section-header">
+      <h2>Run summary</h2>
+      <button class="button ui default" ng-click="addRun()">Add run</button>
+    </div>
+
+    <div class="section-empty" ng-if="!problem.runs.length">
+      No runs yet!
+    </div>
+
+    <ul>
+      <li ng-repeat="(index, run) in problem.runs">
+        <a ui-sref="problem.run({ run: index })">{{ index }}</a>
+        <a ng-click="removeRun(index)">Remove</a>
+      </li>
+    </ul>
   </div>
 
-  <div class="section-empty" ng-if="!problem.runs.length">
-    No runs yet!
+  <div class="problem-tests section">
+    <div class="section-header">
+      <h2>Test cases</h2>
+    </div>
   </div>
-
-  <ul>
-    <li ng-repeat="(index, run) in problem.runs">
-      {{ index }}
-      <a ng-click="removeRun(index)">Remove</a>
-    </li>
-  </ul>
 </div>

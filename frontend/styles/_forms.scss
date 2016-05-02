@@ -27,6 +27,7 @@
 .input {
   display: block;
   font-family: $body-font-family;
+  outline: none;
 
   &.inconspicuous {
     border-color: $lighter-gray;

@@ -12,7 +12,7 @@
 
     <ul class="problem-nav">
       <li ng-repeat="(id, problem) in problems">
-        <a class="problem-item" ui-sref="problem.detail({ id: id })" ui-sref-active="active">
+        <a class="problem-item" ui-sref="problem.detail({ problem: id })" ui-sref-active="active">
           <i ng-if="!problem.name">{{ id }}</i>
           {{ problem.name }}
         </a>

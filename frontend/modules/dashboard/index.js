@@ -31,18 +31,29 @@ angular.module('dashboard', ['ngStorage', 'ui.router'])
         controller: require('./controllers/problem.detail'),
         resolve: {
           problem: function($localStorage, $stateParams) {
-            return $localStorage.problems[$stateParams.id];
+            return $localStorage.problems[$stateParams.problem];
           },
           remove: function($localStorage, $state, $stateParams) {
             return function() {
-              $state.go('^').then(function() {
-                delete $localStorage.problems[$stateParams.id];
+              $state.go('problem').then(function() {
+                delete $localStorage.problems[$stateParams.problem];
               });
             };
           }
         },
         templateUrl: 'partials/dashboard.problem.detail.html',
-        url: ':id'
+        url: ':problem'
       })
+      .state('problem.run', {
+        controller: require('./controllers/problem.run'),
+        parent: 'problem.detail',
+        resolve: {
+          run: function($stateParams, problem) {
+            return problem.runs[$stateParams.run];
+          }
+        },
+        templateUrl: 'partials/dashboard.problem.run.html',
+        url: '/:run'
+      });
   })
   .value('gp', gp);

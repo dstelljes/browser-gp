@@ -1,6 +1,7 @@
 @import 'global';
 
 @import 'forms';
+@import 'grid';
 
 .body {
   padding: 4em 2em 2em 2em;
@@ -25,6 +26,7 @@
   height: 100vh;
 
   .pane {
+    flex-grow: 1;
     max-height: 100%;
     overflow: auto;
   }
@@ -69,7 +71,7 @@
   background-color: $light-blue;
   display: flex;
   flex-direction: column;
-  width: 16em;
+  max-width: 16em;
 
   .button {
     background-color: $lighter-blue;
