@@ -15,7 +15,7 @@ module.exports = function($localStorage, $scope, $state, problems) {
     };
 
     $state.go('problem.detail', {
-      id: id
+      problem: id
     });
   };
 };
