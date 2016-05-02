@@ -30,15 +30,8 @@ angular.module('dashboard', ['ngStorage', 'ui.router'])
       .state('problem.detail', {
         controller: require('./controllers/problem.detail'),
         resolve: {
-          problem: function($localStorage, $stateParams) {
-            return $localStorage.problems[$stateParams.problem];
-          },
-          remove: function($localStorage, $state, $stateParams) {
-            return function() {
-              $state.go('problem').then(function() {
-                delete $localStorage.problems[$stateParams.problem];
-              });
-            };
+          problem: function($stateParams, problems) {
+            return problems[$stateParams.problem];
           }
         },
         templateUrl: 'partials/dashboard.problem.detail.html',

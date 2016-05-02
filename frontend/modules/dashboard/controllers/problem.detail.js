@@ -1,8 +1,11 @@
 'use strict';
 
-module.exports = function($scope, $state, problem, remove) {
+module.exports = function($scope, $state, $stateParams, problem) {
   $scope.problem = problem;
-  $scope.removeProblem = remove;
+
+  $scope.removeProblem = function() {
+    $scope.$parent.removeProblem($stateParams.problem);
+  };
 
   $scope.addRun = function() {
     var count = $scope.problem.runs.push({

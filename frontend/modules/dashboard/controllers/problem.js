@@ -18,6 +18,12 @@ module.exports = function($localStorage, $scope, $state, problems) {
       problem: id
     });
   };
+
+  $scope.removeProblem = function(id) {
+    $state.go('problem').then(function() {
+      delete $scope.problems[id];
+    });
+  };
 };
 
 // Odds of a collision are 1/1520760, so not going to worry about it.
