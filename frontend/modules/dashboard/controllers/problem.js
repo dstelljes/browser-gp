@@ -7,7 +7,11 @@ module.exports = function($localStorage, $scope, $state, problems) {
     var id = slug(3);
 
     $scope.problems[id] = {
-      name: ''
+      name: '',
+      description: '',
+      variables: [],
+      tests: [],
+      runs: []
     };
 
     $state.go('problem.detail', {
