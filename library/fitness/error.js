@@ -3,6 +3,18 @@
  * Provides the standard |actual - expected| fitness measure.
  */
 
+/**
+ * Scores a program against the scorer's test cases.
+ *
+ * @callback fitness~ErrorScorer
+ *
+ * @param {Array.<Case>} tests
+ * The fitness cases to evaluate.
+ *
+ * @returns {number}
+ * The sum of the errors on the given test cases.
+ */
+
 'use strict';
 
 var evaluate = require('../program').evaluate;
@@ -35,18 +47,16 @@ var difference = function(program, test) {
  * @param {Program} program
  * A program respresentation.
  *
- * @param {Array.<Case>} tests
- * The fitness cases to evaluate.
- *
- * @returns {number}
- * The sum of the errors on the given test cases.
+ * @returns {fitness~ErrorScorer}
  */
-var error = module.exports = function(program, tests) {
-  var sum = 0;
+var error = module.exports = function(tests) {
+  return function(program) {
+    var sum = 0;
 
-  for (var index in tests) {
-    sum += difference(program, tests[index]);
-  }
+    for (var index in tests) {
+      sum += difference(program, tests[index]);
+    }
 
-  return sum;
+    return sum;
+  };
 };

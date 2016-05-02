@@ -12,6 +12,7 @@ module.exports = {
   operators: require('./operators'),
   program: require('./program'),
   random: require('./random'),
+  selection: require('./selection'),
   PRNG: require('./prng'),
   Problem: require('./problem')
 };

@@ -11,7 +11,7 @@ describe('error fitness measure', function() {
   it('correctly calulates fitness', function() {
     var x = Symbol();
 
-    var fitness = gp.fitness.error([x], [{
+    var error = gp.fitness.error([{
       inputs: {
         [x]: -2
       },
@@ -28,6 +28,6 @@ describe('error fitness measure', function() {
       output: 4
     }]);
 
-    expect(fitness).toBe(4);
+    expect(error([x])).toBe(4);
   });
 });
