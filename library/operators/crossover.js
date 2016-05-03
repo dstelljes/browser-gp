@@ -3,17 +3,6 @@
  * Provides the crossover operator.
  */
 
-/**
- * Performs a crossover on two programs.
- *
- * @callback operators~CrossoverOperator
- *
- * @param {Program} a
- * @param {Program} b
- *
- * @returns {Program}
- */
-
 'use strict';
 
 var program = require('../program');
@@ -27,7 +16,7 @@ var program = require('../program');
  * @param {PRNG} random
  * The random number generator to use for selecting crossover points.
  *
- * @returns {operators~CrossoverOperator}
+ * @returns {Operator}
  */
 var crossover = module.exports = function(random) {
   return function(a, b) {

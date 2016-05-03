@@ -3,24 +3,11 @@
  * Implements the grow generator.
  */
 
-/**
- * Generates a program by picking randomly from the function and terminal sets.
- *
- * @callback generators~GrowGenerator
- *
- * @param {number} depth
- * The maximum depth that a generated tree can have (specifically, the depth of
- * the deepest leaf assuming the root is depth 0).
- *
- * @returns {Program}
- *
- * @see http://cswww.essex.ac.uk/staff/rpoli/gp-field-guide/22InitialisingthePopulation.html#7_2
- */
-
 'use strict';
 
 /**
- * Creates a grow generator.
+ * Creates a function that generates a program by picking randomly from the
+ * function and terminal sets until a maximum depth is reached.
  *
  * @function
  * @memberof generators
@@ -35,7 +22,7 @@
  * The random number generator to use when selecting from the function and
  * terminal sets.
  *
- * @returns {generators~GrowGenerator}
+ * @returns {Generator}
  */
 var grow = module.exports = function(functions, terminals, random) {
   var p = terminals.length / (functions.length + terminals.length);

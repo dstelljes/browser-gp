@@ -3,26 +3,12 @@
  * Implements the full generator.
  */
 
-/**
- * Generates a program by picking randomly from the function and terminal sets
- * until a maximum depth is reached (as opposed to the grow generator, which may
- * not reach the maximum depth).
- *
- * @callback generators~FullGenerator
- *
- * @param {number} depth
- * The depth that a generated tree should have (specifically, the depth of the
- * deepest leaf assuming the root is depth 0).
- *
- * @returns {Program}
- *
- * @see http://cswww.essex.ac.uk/staff/rpoli/gp-field-guide/22InitialisingthePopulation.html#7_2
- */
-
 'use strict';
 
 /**
- * Creates a full generator.
+ * Creates a function that builds a full program tree of the maximum depth is
+ * reached (as opposed to the grow generator, which may not reach the maximum
+ * depth or result in a full tree).
  *
  * @function
  * @memberof generators
@@ -37,7 +23,7 @@
  * The random number generator to use when selecting from the function and
  * terminal sets.
  *
- * @returns {generators~FullGenerator}
+ * @returns {Generator}
  */
 var full = module.exports = function(functions, terminals, random) {
   var recurse = function(depth) {

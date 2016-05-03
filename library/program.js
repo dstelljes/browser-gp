@@ -25,7 +25,7 @@
  * @param {Program} program
  * A program representation.
  *
- * @param {Object.<string, number>} [values={}]
+ * @param {Object.<symbol, number>} [values={}]
  * Variable substitutions keyed by name.
  *
  * @returns {number}
@@ -54,6 +54,7 @@ var evaluate = module.exports.evaluate = function(program, values) {
         stack.push(primitive.apply(undefined, operands));
         break;
 
+      case 'boolean':
       case 'number':
       case 'string':
         stack.push(primitive);
@@ -112,7 +113,7 @@ var extractSubtree = module.exports.extractSubtree = function(program, root) {
  * @param {number} root
  * The index of the root node.
  *
- * @returns {Program}
+ * @returns {number}
  * The length of the subtree.
  */
 var findSubtreeLength = module.exports.findSubtreeLength = function(program, root) {
