@@ -4,9 +4,9 @@
  */
 
 /**
- * @typedef {Array.<(function|number|string|symbol)>} Program
- * A program represented in prefix notation. Functions are functions, numbers
- * and strings are constants, and symbols are variables.
+ * @typedef {Array.<(boolean|function|number|string|symbol)>} Program
+ * A program represented in prefix notation. Functions are functions; booleans,
+ * numbers, and strings are constants; symbols are variables.
  */
 
 /**
