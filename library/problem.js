@@ -15,12 +15,6 @@
 
 'use strict';
 
-// Default functions:
-var add = require('./functions/addition');
-var sub = require('./functions/subtraction');
-var mul = require('./functions/multiplication');
-var div = require('./functions/protected_division');
-
 // Default generator:
 var grow = require('./generators/grow');
 
@@ -29,6 +23,9 @@ var random = require('./random/native')();
 
 // Default scorer:
 var error = require('./fitness/error');
+
+// Default selector:
+var tournament = require('./selection/tournament');
 
 /**
  * Constructs a problem instance.
@@ -42,6 +39,36 @@ var Problem = module.exports = function() {
   //
 };
 
+Problem.prototype.run = function() {
+  //create inital population
+  var generator = this.generator();
+  var population = [];
+
+  for (var i = 0; i < this.populationSize; i++) {
+    population.push(generator(this.depth));
+  }
+
+  console.log(population);
+
+  // build a new generation using selection method (tournament)
+  var selection = this.selection();
+  var parents =[];
+  for (var i = 0; i < this.populationSize; i++) {
+    parents.push(selection(population));
+
+    /*Rough plan after talking to Nic*/
+    //select p1 and p2
+    //xo these parents
+    //mutate the new child with some probability
+    //repeat until full population is generated
+  }
+
+  // mutation
+
+
+
+};
+
 /**
  * The test cases to score evolved programs against.
  * @type {Array.<Case>}
@@ -52,7 +79,7 @@ Problem.prototype.cases = [];
  * The constant set.
  * @type {Array.<boolean|number|string>}
  */
-Problem.prototype.constants = [];
+Problem.prototype.constants = [-2, 0, 2];
 
 /**
  * The maximum depth a program can have.
@@ -61,11 +88,10 @@ Problem.prototype.constants = [];
 Problem.prototype.depth = 5;
 
 /**
- * The function set. By default, includes addition, subtraction, multiplication,
- * and protected division.
+ * The function set.
  * @type {Array.<function>}
  */
-Problem.prototype.functions = [add, sub, mul, div];
+Problem.prototype.functions = [Math.sin, Math.cos];
 
 /**
  * The generator factory. Provides a program generator at runtime. By default,
@@ -76,7 +102,22 @@ Problem.prototype.generator = function() {
 };
 
 /**
+ * The operator function factory. By default, does crossover with probability
+ * 0.5.
+ */
+Problem.prototype.operation = function() {
+  return
+};
+
+/**
+ * The population size. By default, 1000.
+ * @type {number}
+ */
+Problem.prototype.populationSize = 1000;
+
+/**
  * The random number generator. By default, Math.random.
+ * @type {PRNG}
  */
 Problem.prototype.random = random;
 
@@ -87,6 +128,14 @@ Problem.prototype.random = random;
  */
 Problem.prototype.scorer = function() {
   return error(this.cases);
+};
+
+/**
+ * The selection function factory
+ * By default tournments size is 5
+ **/
+Problem.prototype.selection = function(){
+  return tournament(5, this.random, this.scorer());
 };
 
 /**
