@@ -47,6 +47,30 @@ var data = {
   ]
 }
 
+/*
+// var drawTree = function(){
+//   var canvas = d3.demo.canvas(data);
+//   d3.select("#tree-container").call(canvas);
+//   canvas.loadTree();
+// }
+// (+ (- 3 6) 9)
+var odd = [add, sub, 3, 6, 9];
+
+var makeNode = function(arr){
+  var node = {
+    "name" : arr[0],
+    "children" : []
+  };
+
+  for(var c = 0; c < node.name.length; c++){
+    //TODO: think of a semi-reasonalbe way to do this...
+    var child = .extractSubtree;
+    node.children.push(makeNode(child));
+  }
+}
+
+var treeData = makeNode(arr);
+*/
 
 var drawTree = function(){
   var canvas = d3.demo.canvas(data);
