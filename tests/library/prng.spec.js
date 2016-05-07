@@ -47,4 +47,10 @@ describe('PRNG class', function() {
     expect(wheel.integer(-5, 5)).toBe(0);
     expect(wheel.integer(-20, 20)).toBe(16);
   });
+
+  it('shuffles an array', function() {
+    var array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    expect(wheel.shuffle(array)).toEqual([5, 2, 9, 6, 8, 3, 0, 7, 4, 1]);
+  });
 });
