@@ -11,7 +11,7 @@ var program = require('../program');
  * Creates a crossover operator.
  *
  * @function
- * @memberof operators
+ * @memberof recombinators
  *
  * @param {PRNG} random
  * The random number generator to use for selecting crossover points.

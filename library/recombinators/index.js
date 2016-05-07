@@ -1,6 +1,6 @@
 /**
  * @file
- * Provides the operators index.
+ * Provides the recombinator function index.
  */
 
 /**
@@ -16,7 +16,7 @@
 'use strict';
 
 /**
- * @namespace operators
+ * @namespace recombinators
  */
 
 module.exports = {

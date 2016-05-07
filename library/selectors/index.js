@@ -1,6 +1,6 @@
 /**
  * @file
- * Provides the selection index.
+ * Provides the selector function index.
  */
 
 /**
@@ -18,9 +18,10 @@
 'use strict';
 
 /**
- * @namespace selection
+ * @namespace selectors
  */
 
 module.exports = {
+  fittest: require('./fittest'),
   tournament: require('./tournament')
 };

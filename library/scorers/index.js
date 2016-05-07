@@ -18,7 +18,7 @@
 'use strict';
 
 /**
- * @namespace fitness
+ * @namespace scorers
  */
 
 module.exports = {

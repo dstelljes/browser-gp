@@ -4,6 +4,28 @@
  */
 
 /**
+ * Receives generational information from a run.
+ *
+ * @callback ResultsCallback
+ *
+ * @param {number} generation
+ * The generation number.
+ *
+ * @param {Object.<string, number>} scores
+ * Score information.
+ * @param {number} scores.best
+ * The score of the fittest individual in the population.
+ *
+ * @param {Object.<string, Program>} individuals
+ * Notable individuals.
+ * @param {number} individuals.best
+ * The fittest individual in the population.
+ *
+ * @param {Array.<Program>} population
+ * The population.
+ */
+
+/**
  * @typedef {Object} Case
  * A case that describes the desired output of an evolved program based on some
  * inputs.
@@ -15,20 +37,16 @@
 
 'use strict';
 
-// Default functions:
-var add = require('./functions/addition');
-var sub = require('./functions/subtraction');
-var mul = require('./functions/multiplication');
-var div = require('./functions/protected_division');
-
-// Default generator:
 var grow = require('./generators/grow');
 
-// Default PRNG instance:
 var random = require('./random/native')();
 
-// Default scorer:
-var error = require('./fitness/error');
+var crossover = require('./recombinators/crossover');
+
+var error = require('./scorers/error');
+
+var fittest = require('./selectors/fittest');
+var tournament = require('./selectors/tournament');
 
 /**
  * Constructs a problem instance.
@@ -40,6 +58,72 @@ var error = require('./fitness/error');
  */
 var Problem = module.exports = function() {
   //
+};
+
+/**
+ * Evolves a population.
+ *
+ * @param {Array.<Program>} population
+ * The population to evolve.
+ *
+ * @returns {Array.<Program>}
+ * The evolved population.
+ */
+Problem.prototype.evolve = function(population) {
+  var recombinator = this.recombinator();
+  var selector = this.selector();
+
+  var evolved = [];
+
+  for (var i = 0; i < population.length; i++) {
+    var parents = [];
+
+    for (var j = 0; j < recombinator.length; j++) {
+      parents.push(selector(population));
+    }
+
+    var child = recombinator(...parents);
+    evolved.push(child);
+
+    // @TODO mutator
+  }
+
+  return evolved;
+};
+
+/**
+ * Creates an initial population and runs evolution for the specified number of
+ * generations.
+ *
+ * @param {ResultsCallback} [callback]
+ * The result callback to receive generational information.
+ */
+Problem.prototype.run = function(callback) {
+  // Create an initial population:
+  var generator = this.generator();
+  var population = [];
+
+  for (var i = 0; i < this.populationSize; i++) {
+    population.push(generator(this.depth));
+  }
+
+  // Use the boring selector to find the best individual:
+  var scorer = this.scorer();
+  var selector = fittest(scorer, this.maximize);
+
+  for (var i = 0; i < this.generations; i++) {
+    if (typeof callback === 'function') {
+      var best = selector(population);
+
+      callback(i, {
+        best: scorer(best)
+      }, {
+        best: best
+      }, population);
+    }
+
+    population = this.evolve(population);
+  }
 };
 
 /**
@@ -55,17 +139,21 @@ Problem.prototype.cases = [];
 Problem.prototype.constants = [];
 
 /**
- * The maximum depth a program can have.
+ * The maximum depth a program can have. Defaults to 5.
  * @type number
  */
 Problem.prototype.depth = 5;
 
 /**
- * The function set. By default, includes addition, subtraction, multiplication,
- * and protected division.
+ * The function set.
  * @type {Array.<function>}
  */
-Problem.prototype.functions = [add, sub, mul, div];
+Problem.prototype.functions = [];
+
+/**
+ * The number of generations to evolve. Defaults to 50.
+ */
+Problem.prototype.generations = 50;
 
 /**
  * The generator factory. Provides a program generator at runtime. By default,
@@ -76,9 +164,34 @@ Problem.prototype.generator = function() {
 };
 
 /**
+ * Whether to maximize fitness. Minimizes by default.
+ */
+Problem.prototype.maximize = false;
+
+/**
+ * The population size. By default, 1000.
+ * @type {number}
+ */
+Problem.prototype.populationSize = 1000;
+
+/**
  * The random number generator. By default, Math.random.
+ * @type {PRNG}
  */
 Problem.prototype.random = random;
+
+/**
+ * The recombinator function factory. By default, does crossover with probability
+ * 0.5.
+ */
+Problem.prototype.recombinator = function() {
+  var random = this.random;
+  var recombinator = crossover(random);
+
+  return function(a, b) {
+    return random.double() < 0.5 ? recombinator(a, b) : b;
+  };
+};
 
 /**
  * The scorer factory. Provides a scorer at runtime. By default, creates an
@@ -87,6 +200,13 @@ Problem.prototype.random = random;
  */
 Problem.prototype.scorer = function() {
   return error(this.cases);
+};
+
+/**
+ * The selection function factory. By default, creates a tournment with size 10.
+ **/
+Problem.prototype.selector = function() {
+  return tournament(10, this.random, this.scorer());
 };
 
 /**

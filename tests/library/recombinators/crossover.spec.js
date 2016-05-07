@@ -1,6 +1,6 @@
 /**
  * @file
- * Tests the crossover operator.
+ * Tests the crossover recombinator.
  */
 
 'use strict';
@@ -29,7 +29,7 @@ describe('crossover', function() {
     expect(wheel.integer(0, odd.length)).toBe(1);
     // And we only gave the wheel two values, so it's back at the beginning.
 
-    var crossover = gp.operators.crossover(wheel);
+    var crossover = gp.recombinators.crossover(wheel);
     expect(crossover(even, odd)).toEqual([mul, 2, sub, 3, 6]);
   });
 
@@ -44,7 +44,7 @@ describe('crossover', function() {
     expect(wheel.integer(0, even.length)).toBe(3);
     expect(wheel.integer(0, odd.length)).toBe(0);
 
-    var crossover = gp.operators.crossover(wheel);
+    var crossover = gp.recombinators.crossover(wheel);
     expect(crossover(even, odd)).toEqual([add, sub, 0, div, 9, 3, 6]);
   });
 });
