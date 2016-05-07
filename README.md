@@ -13,13 +13,18 @@ Currently, the core library has no external dependencies.
 
 If you want to...
 
-*   build the web frontend: `npm install` to install tooling, `bower install`
-    to install frontend dependencies, and `brunch watch --server` to serve the
-    app locally. Requires global install of [Brunch][brunch].
+*   Build the web frontend:
+  1. `npm install` to install tooling. We recommend using [nvm][nvm] to install
+  a 5.*  version of node.
+  2. `bower install` to install frontend dependencies.
+  Requires global install of bower (`npm install -g bower`)
+  3. `brunch watch --server` to serve the app locally.
+  Requires global install of [Brunch][brunch] (`npm install -g brunch`).
 
-*   run tests: `npm test`. Requires global install of [Jasmine][jasmine].
 
-*   generate documentation: `jsdoc -c jsdoc.json`.
+*   Run tests: `npm test`. Requires global install of [Jasmine][jasmine].
+
+*   Generate documentation: `jsdoc -c jsdoc.json`.
     Requires global install of [JSDoc][jsdoc].
 
 Build artifacts (documentation and frontend files) are dumped into the `build`
@@ -37,5 +42,6 @@ licenses.
 [jsdoc]: http://usejsdoc.org/
 [mo-sweet-mo]: http://morris.umn.edu/
 [nic]: http://facultypages.morris.umn.edu/~mcphee/
+[nvm]: https://github.com/creationix/nvm/blob/master/README.markdown
 [tinygp]: http://cswww.essex.ac.uk/staff/rpoli/TinyGP/
 [tom]: https://github.com/harre096
