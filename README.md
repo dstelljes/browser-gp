@@ -15,11 +15,12 @@ If you want to...
 
 *   build the web frontend: `npm install` to install tooling, `bower install`
     to install frontend dependencies, and `brunch watch --server` to serve the
-    app locally. Requires [Brunch][brunch].
+    app locally. Requires global install of [Brunch][brunch].
 
-*   run tests: `npm test`. Requires [Jasmine][jasmine].
+*   run tests: `npm test`. Requires global install of [Jasmine][jasmine].
 
-*   generate documentation: `jsdoc -c jsdoc.json`. Requires [JSDoc][jsdoc].
+*   generate documentation: `jsdoc -c jsdoc.json`.
+    Requires global install of [JSDoc][jsdoc].
 
 Build artifacts (documentation and frontend files) are dumped into the `build`
 directory.
