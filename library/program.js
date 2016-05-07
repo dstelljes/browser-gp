@@ -25,7 +25,7 @@
  * @param {Program} program
  * A program representation.
  *
- * @param {Object.<symbol, number>} [values={}]
+ * @param {Object.<symbol, boolean|number|string>} [values={}]
  * Variable substitutions keyed by name.
  *
  * @returns {number}
@@ -135,4 +135,58 @@ var findSubtreeLength = module.exports.findSubtreeLength = function(program, roo
   }
 
   return pointer - root;
+};
+
+/**
+ * Converts a program representation to an s-expression.
+ *
+ * @param {Program} program
+ * The program to stringify.
+ *
+ * @returns {string}
+ * The program as an s-expression.
+ */
+var lispify = module.exports.lispify = function(program) {
+  var pointer = 0;
+  var expression = [];
+
+  while (pointer < program.length) {
+    var primitive = program[pointer];
+
+    switch (typeof primitive) {
+      case 'function':
+        var subtree = extractSubtree(program, pointer);
+        subtree.shift();
+
+        expression.push('(' + primitive, lispify(subtree) + ')');
+        pointer += findSubtreeLength(program, pointer);
+
+        break;
+
+      case 'boolean':
+      case 'number':
+        expression.push(primitive);
+        pointer += 1;
+
+        break;
+
+      case 'string':
+        expression.push('"' + primitive + '"');
+        pointer += 1;
+
+        break;
+
+      case 'symbol':
+        // @TODO: figure out how to actually substitute stuff
+        expression.push('<variable>');
+        pointer += 1;
+
+        break;
+
+      default:
+        throw new Error('Invalid primitive at index ' + pointer);
+    }
+  }
+
+  return expression.join(' ');
 };
