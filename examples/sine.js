@@ -49,4 +49,9 @@ regression.functions = [
 
 regression.variables = [x];
 
-regression.run();
+console.log('Trying to find an approximation for sin(x):\n');
+
+regression.run(function(generation, scores) {
+  console.log('Generation %d:', generation);
+  console.log('  Best score: %d', scores.best);
+});

@@ -4,6 +4,28 @@
  */
 
 /**
+ * Receives generational information from a run.
+ *
+ * @callback ResultsCallback
+ *
+ * @param {number} generation
+ * The generation number.
+ *
+ * @param {Object.<string, number>} scores
+ * Score information.
+ * @param {number} scores.best
+ * The score of the fittest individual in the population.
+ *
+ * @param {Object.<string, Program>} individuals
+ * Notable individuals.
+ * @param {number} individuals.best
+ * The fittest individual in the population.
+ *
+ * @param {Array.<Program>} population
+ * The population.
+ */
+
+/**
  * @typedef {Object} Case
  * A case that describes the desired output of an evolved program based on some
  * inputs.
@@ -69,7 +91,14 @@ Problem.prototype.evolve = function(population) {
   return evolved;
 };
 
-Problem.prototype.run = function() {
+/**
+ * Creates an initial population and runs evolution for the specified number of
+ * generations.
+ *
+ * @param {ResultsCallback} [callback]
+ * The result callback to receive generational information.
+ */
+Problem.prototype.run = function(callback) {
   // Create an initial population:
   var generator = this.generator();
   var population = [];
@@ -83,8 +112,16 @@ Problem.prototype.run = function() {
   var selector = fittest(scorer, this.maximize);
 
   for (var i = 0; i < this.generations; i++) {
-    console.log('GENERATION ' + i + ':');
-    console.log('  Best fitness:' + scorer(selector(population)));
+    if (typeof callback === 'function') {
+      var best = selector(population);
+
+      callback(i, {
+        best: scorer(best)
+      }, {
+        best: best
+      }, population);
+    }
+
     population = this.evolve(population);
   }
 };
