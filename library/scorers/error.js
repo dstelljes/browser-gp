@@ -31,7 +31,7 @@ var difference = function(program, test) {
  * case errors.
  *
  * @function
- * @memberof fitness
+ * @memberof scorers
  *
  * @param {Array.<Case>} tests
  * The fitness cases to evaluate.

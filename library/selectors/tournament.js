@@ -10,7 +10,7 @@
  * sample of the population.
  *
  * @function
- * @memberof selection
+ * @memberof selectors
  *
  * @param {number} size
  * The tournament size (i.e. the number of random individuals that will compete
