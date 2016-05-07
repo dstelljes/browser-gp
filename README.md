@@ -8,14 +8,11 @@ Computation class at [UMM][mo-sweet-mo].
 
 Building
 --
-
-Currently, the core library has no external dependencies.
-
 If you want to...
 
 *   Build the web frontend:
   1. `npm install` to install tooling. We recommend using [nvm][nvm] to install
-  a 5.*  version of node.
+  a 5.*  version of npm.
   2. `bower install` to install frontend dependencies.
   Requires global install of [Bower][bower] (`npm install -g bower`).
   3. `brunch watch --server` to serve the app locally.
