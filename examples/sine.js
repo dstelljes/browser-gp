@@ -38,7 +38,21 @@ var regression = new gp.Problem();
 
 regression.cases = cases;
 
-regression.constants = [];
+regression.constants = [-1, 2, 5];
+
+regression.variables = [x];
+
+regression.functions = [
+  gp.functions.sine
+];
+
+console.log('Trying to evolve sin(x) with the sine function provided... usually succeeds immediately:\n');
+
+regression.run(function(generation, scores, individuals) {
+  console.log('Generation %d:', generation);
+  console.log('  Best score: %d', scores.best);
+  console.log('  Best individual: %s', gp.program.lispify(individuals.best));
+});
 
 regression.functions = [
   gp.functions.addition,
@@ -47,11 +61,10 @@ regression.functions = [
   gp.functions.protectedDivision
 ];
 
-regression.variables = [x];
+console.log('\n\nTrying to find an approximation for sin(x) with simple operations:\n');
 
-console.log('Trying to find an approximation for sin(x):\n');
-
-regression.run(function(generation, scores) {
+regression.run(function(generation, scores, individuals) {
   console.log('Generation %d:', generation);
   console.log('  Best score: %d', scores.best);
+  console.log('  Best individual: %s', gp.program.lispify(individuals.best));
 });
