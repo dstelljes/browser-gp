@@ -112,19 +112,33 @@ Problem.prototype.run = function(callback) {
   var selector = fittest(scorer, this.maximize);
 
   for (var i = 0; i < this.generations; i++) {
-    if (typeof callback === 'function') {
-      var best = selector(population);
+    var bestIndividual = selector(population);
+    var bestScore = scorer(bestIndividual);
 
+    if (typeof callback === 'function') {
       callback(i, {
-        best: scorer(best)
+        best: bestScore
       }, {
-        best: best
+        best: bestIndividual
       }, population);
     }
 
+    // If an acceptable solution is found, we're done:
+    if ((this.maximize && bestScore > this.acceptable) || bestScore < this.acceptable) {
+      break;
+    }
+
+    // Otherwise, continue evolving:
     population = this.evolve(population);
   }
 };
+
+/**
+ * The score at which a solution would be considered acceptable (i.e. when to
+ * stop evolving).
+ * @type {number}
+ */
+Problem.prototype.acceptable = 0.001;
 
 /**
  * The test cases to score evolved programs against.
