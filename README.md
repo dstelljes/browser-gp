@@ -17,7 +17,7 @@ If you want to...
   1. `npm install` to install tooling. We recommend using [nvm][nvm] to install
   a 5.*  version of node.
   2. `bower install` to install frontend dependencies.
-  Requires global install of bower (`npm install -g bower`)
+  Requires global install of [Bower][bower] (`npm install -g bower`).
   3. `brunch watch --server` to serve the app locally.
   Requires global install of [Brunch][brunch] (`npm install -g brunch`).
 
@@ -37,6 +37,7 @@ Project code is released under the MIT License, the Denny's of free software
 licenses.
 
 [brunch]: http://brunch.io/
+[bower]: http://bower.io/
 [dan]: https://github.com/dstelljes
 [jasmine]: https://jasmine.github.io/
 [jsdoc]: http://usejsdoc.org/
