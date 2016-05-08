@@ -9,26 +9,26 @@ var data = {
         {
           "name": "cluster",
           "children": [
-            {"name": "AgglomerativeCluster", "size": 3938},
-            {"name": "CommunityStructure", "size": 3812},
-            {"name": "HierarchicalCluster", "size": 6714},
-            {"name": "MergeEdge", "size": 743}
+            {"name": "AgglomerativeCluster"},
+            {"name": "CommunityStructure"},
+            {"name": "HierarchicalCluster"},
+            {"name": "MergeEdge"}
           ]
         },
         {
           "name": "graph",
           "children": [
-            {"name": "BetweennessCentrality", "size": 3534},
-            {"name": "LinkDistance", "size": 5731},
-            {"name": "MaxFlowMinCut", "size": 7840},
-            {"name": "ShortestPaths", "size": 5914},
-            {"name": "SpanningTree", "size": 3416}
+            {"name": "BetweennessCentrality"},
+            {"name": "LinkDistance"},
+            {"name": "MaxFlowMinCut"},
+            {"name": "ShortestPaths"},
+            {"name": "SpanningTree"}
           ]
         },
         {
           "name": "optimization",
           "children": [
-            {"name": "AspectRatioBanker", "size": 7074}
+            {"name": "AspectRatioBanker"}
           ]
         }
       ]
@@ -36,10 +36,10 @@ var data = {
     {
       "name": "cluster",
       "children": [
-        {"name": "AgglomerativeCluster", "size": 3938},
-        {"name": "CommunityStructure", "size": 3812},
-        {"name": "HierarchicalCluster", "size": 6714},
-        {"name": "MergeEdge", "size": 743}
+        {"name": "AgglomerativeCluster"},
+        {"name": "CommunityStructure"},
+        {"name": "HierarchicalCluster"},
+        {"name": "MergeEdge"}
       ]
     }
   ]
@@ -71,7 +71,42 @@ module.exports = function($scope, d3, problem, run, tree) {
     name: 'Division'
   }];
 
-  var canvas = tree(data);
-  d3.select('#tree-container').call(canvas);
-  canvas.loadTree();
+  var bo = ["-", 10, ["*", ["+", 9, 8 ], 7 ], 6];
+
+/**
+ * Converts S expressions into d3 "flare.json" esque object
+ *
+ *   ***Example***
+ * Input:  ["-",10,["*",["+",9,8],7],6]
+ * Output: {"name":"-","children":[{"name":10},{"name":"*","children":
+    [{"name":"+","children":[{"name":9},{"name":8}]},{"name":7}]},{"name":6}]}
+ *
+ * @function
+ * @memberof functions
+ *
+ * @param {s-expression} sexpr
+ *
+ * @returns {treeOject}
+ */
+
+var makeTree = function(sexpr){
+  if(!Array.isArray(sexpr)){
+    return {"name" : sexpr};
+  }else{
+    var node = {
+      "name" : sexpr[0]
+    };
+
+    node.children = [];
+    for(var i=1; i<sexpr.length; i++){
+      node.children.push(makeTree(sexpr[i]));
+    }
+    return node;
+  }
+}
+
+
+var canvas = tree(makeTree(bo));
+d3.select('#tree-container').call(canvas);
+canvas.loadTree();
 };
