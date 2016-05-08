@@ -39,6 +39,8 @@
 
 var grow = require('./generators/grow');
 
+var point = require('./mutators/point');
+
 var random = require('./random/native')();
 
 var crossover = require('./recombinators/crossover');
@@ -70,6 +72,7 @@ var Problem = module.exports = function() {
  * The evolved population.
  */
 Problem.prototype.evolve = function(population) {
+  var mutator = this.mutator();
   var recombinator = this.recombinator();
   var selector = this.selector();
 
@@ -82,10 +85,8 @@ Problem.prototype.evolve = function(population) {
       parents.push(selector(population));
     }
 
-    var child = recombinator(...parents);
+    var child = mutator(recombinator(...parents));
     evolved.push(child);
-
-    // @TODO mutator
   }
 
   return evolved;
@@ -183,6 +184,21 @@ Problem.prototype.generator = function() {
 Problem.prototype.maximize = false;
 
 /**
+ * The mutator function factory. By default, does point mutation with probability
+ * 0.25 (per-node probability 0.05).
+ */
+Problem.prototype.mutator = function() {
+  var random = this.random;
+
+  var primitives = [].concat(this.constants, this.functions, this.variables);
+  var mutator = point(primitives, 0.05, random);
+
+  return function(program) {
+    return random.double() < 0.25 ? mutator(program) : program;
+  };
+};
+
+/**
  * The population size. By default, 1000.
  * @type {number}
  */
@@ -196,7 +212,7 @@ Problem.prototype.random = random;
 
 /**
  * The recombinator function factory. By default, does crossover with probability
- * 0.5.
+ * 0.75.
  */
 Problem.prototype.recombinator = function() {
   var random = this.random;
