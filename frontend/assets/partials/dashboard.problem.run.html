@@ -25,6 +25,11 @@
       </label>
     </div>
   </div>
+
+  <div class="grid-1-2">
+    <button ng-click="evolve()" ng-hide="worker.running">BIG RED BUTTON</button>
+    <button ng-click="terminate()" ng-show="worker.running">AAAGH STOP</button>
+  </div>
 </div>
 
 <a ui-sref="^">Back</a>

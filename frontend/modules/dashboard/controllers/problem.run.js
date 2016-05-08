@@ -48,6 +48,10 @@ var data = {
 module.exports = function($scope, d3, problem, run, tree) {
   $scope.problem = problem;
   $scope.run = run;
+  $scope.worker = {
+    instance: null,
+    running: false
+  };
 
   $scope.functions = [{
     bundled: true,
@@ -69,6 +73,11 @@ module.exports = function($scope, d3, problem, run, tree) {
     category: 'Integers',
     key: 'division',
     name: 'Division'
+  }, {
+    bundled: true,
+    category: 'Integers',
+    key: 'protectedDivision',
+    name: 'Protected division'
   }];
 
   var bo = ["-", 10, ["*", ["+", 9, 8 ], 7 ], 6];
@@ -109,4 +118,30 @@ var makeTree = function(sexpr){
 var canvas = tree(makeTree(bo));
 d3.select('#tree-container').call(canvas);
 canvas.loadTree();
+
+  $scope.evolve = function() {
+    var worker = $scope.worker.instance = new Worker('workers/run.js');
+
+    worker.postMessage({
+      action: 'run',
+      problem: $scope.problem,
+      run: $scope.run
+    });
+
+    worker.onmessage = function(message) {
+      switch (message.data.event) {
+        case 'evolved':
+          console.log('Generation ' + message.data.generation + ' had best score ' + message.data.best);
+          break;
+
+        case 'finished':
+          $scope.worker.running = false;
+          break;
+
+        case 'started':
+          $scope.worker.running = true;
+          break;
+      }
+    };
+  };
 };
