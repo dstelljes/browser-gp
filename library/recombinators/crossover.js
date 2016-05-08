@@ -16,7 +16,7 @@ var program = require('../program');
  * @param {PRNG} random
  * The random number generator to use for selecting crossover points.
  *
- * @returns {Operator}
+ * @returns {Recombinator}
  */
 var crossover = module.exports = function(random) {
   return function(a, b) {

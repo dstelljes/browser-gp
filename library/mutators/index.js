@@ -1,6 +1,6 @@
 /**
  * @file
- * Provides the recombinator function index.
+ * Provides the mutator function index.
  */
 
 /**
@@ -16,9 +16,9 @@
 'use strict';
 
 /**
- * @namespace recombinators
+ * @namespace mutators
  */
 
 module.exports = {
-  crossover: require('./crossover')
+  point: require('./point')
 };
