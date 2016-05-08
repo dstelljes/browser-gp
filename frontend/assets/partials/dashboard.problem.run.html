@@ -1,3 +1,25 @@
 <h2>{{ name }}</h2>
 
+<div class="grid-row">
+  <div class="grid-1-2">
+    <h3>Constant set</h3>
+
+    <div ng-repeat="constant in run.constants track by $index">
+      <input type="number" ng-model="run.constants[$index]" />
+      <button ng-click="run.constants.splice($index, 1)">Remove</button>
+    </div>
+
+    <button ng-click="run.constants.push(0)">Add constant</button>
+
+    <h3>Function set</h3>
+
+    <div ng-repeat="function in functions">
+      <label>
+        <input type="checkbox" checklist-model="run.functions" checklist-value="function" />
+        {{ function.name }}
+      </label>
+    </div>
+  </div>
+</div>
+
 <a ui-sref="^">Back</a>

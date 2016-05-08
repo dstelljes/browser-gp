@@ -15,7 +15,8 @@ module.exports = function($scope, $state, $stateParams, problem) {
       fitness: null,
       functions: [],
       generations: 50,
-      operations: [],
+      mutations: [],
+      recombinations: [],
       maximize: true,
       random: null,
       selection: null
