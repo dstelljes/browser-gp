@@ -15,7 +15,8 @@ module.exports = function($scope, $state, $stateParams, problem) {
       fitness: null,
       functions: [],
       generations: 50,
-      operations: [],
+      mutations: [],
+      recombinations: [],
       maximize: true,
       random: null,
       selection: null
@@ -28,5 +29,28 @@ module.exports = function($scope, $state, $stateParams, problem) {
 
   $scope.removeRun = function(index) {
     $scope.problem.runs.splice(index, 1);
+  };
+
+  $scope.addVariable = function() {
+    $scope.problem.variables.push({
+      name: '',
+      type: 'number'
+    });
+  };
+
+  $scope.removeVariable = function(index) {
+    $scope.problem.variables.splice(index, 1);
+
+    // There's maybe a cleaner way to do this...
+    $scope.problem.tests.forEach(function(test) {
+      test.inputs.splice(index, 1);
+    });
+  };
+
+  $scope.addTest = function() {
+    $scope.problem.tests.push({
+      inputs: [],
+      output: ''
+    });
   };
 };

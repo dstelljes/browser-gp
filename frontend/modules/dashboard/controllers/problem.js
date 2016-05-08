@@ -11,6 +11,7 @@ module.exports = function($localStorage, $scope, $state, problems) {
       description: '',
       variables: [],
       tests: [],
+      type: 'number',
       runs: []
     };
 

@@ -11,7 +11,7 @@ describe('error fitness measure', function() {
   it('correctly calulates fitness', function() {
     var x = Symbol();
 
-    var error = gp.fitness.error([{
+    var error = gp.scorers.error([{
       inputs: {
         [x]: -2
       },

@@ -1,6 +1,6 @@
 /**
  * @file
- * Tests tournament selection.
+ * Tests fittest individual selection.
  */
 
 'use strict';
@@ -9,18 +9,17 @@ var gp = require('../../../library');
 
 describe('tournament selection', function() {
   var population = ['a', 'bb', 'ccc', 'dddd', 'eeeee', 'ffffff'];
-  var wheel = gp.random.wheel([0, 0.4, 0.8]);
   var scorer = function(individual) {
     return individual.length;
   };
 
   it('maximizes fitness', function() {
-    var tournament = gp.selection.tournament(3, wheel, scorer, true);
-    expect(tournament(population)).toBe('eeeee');
+    var fittest = gp.selectors.fittest(scorer, true);
+    expect(fittest(population)).toBe('ffffff');
   });
 
   it('minimizes fitness', function() {
-    var tournament = gp.selection.tournament(3, wheel, scorer);
-    expect(tournament(population)).toBe('a');
+    var fittest = gp.selectors.fittest(scorer);
+    expect(fittest(population)).toBe('a');
   });
 });

@@ -1,12 +1,12 @@
 /**
  * @file
- * Provides the operators index.
+ * Provides the recombinator function index.
  */
 
 /**
  * Creates a new program based on one or more programs.
  *
- * @callback Operator
+ * @callback Recombinator
  *
  * @param {...Program} program
  *
@@ -16,7 +16,7 @@
 'use strict';
 
 /**
- * @namespace operators
+ * @namespace recombinators
  */
 
 module.exports = {

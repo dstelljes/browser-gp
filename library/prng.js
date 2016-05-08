@@ -73,3 +73,31 @@ PRNG.prototype.integer = function(lower, upper) {
 
   return Math.floor(this.source() * (upper - lower)) + lower;
 };
+
+/**
+ * Randomizes an array using the Fisher-Yates shuffle.
+ *
+ * @see http://stackoverflow.com/a/6274398
+ *
+ * @param {Array.<*>} array
+ *
+ * @returns {Array.<*>}
+ */
+PRNG.prototype.shuffle = function(array) {
+  var pointer = array.length;
+
+  while (pointer > 0) {
+    // Pick a random index:
+    var index = this.integer(pointer);
+
+    // Decrement the pointer:
+    pointer--;
+
+    // Swap the last element:
+    var element = array[pointer];
+    array[pointer] = array[index];
+    array[index] = element;
+  }
+
+  return array;
+};

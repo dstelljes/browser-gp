@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dashboard', ['ngStorage', 'ui.router'])
+angular.module('dashboard', ['checklist-model', 'ngStorage', 'ui.router'])
   .config(function($localStorageProvider) {
     // Because we're abstracting the storage mechanism away from the controllers,
     // default stuff gets set here. Later on, we'll inject the models into the
@@ -49,4 +49,5 @@ angular.module('dashboard', ['ngStorage', 'ui.router'])
         url: '/:run'
       });
   })
+  .directive('variableType', require('./directives/variable_type'))
   .value('gp', gp);

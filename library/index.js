@@ -6,13 +6,14 @@
 'use strict';
 
 module.exports = {
-  fitness: require('./fitness'),
   functions: require('./functions'),
   generators: require('./generators'),
-  operators: require('./operators'),
+  mutators: require('./mutators'),
   program: require('./program'),
   random: require('./random'),
-  selection: require('./selection'),
+  recombinators: require('./recombinators'),
+  scorers: require('./scorers'),
+  selectors: require('./selectors'),
   PRNG: require('./prng'),
   Problem: require('./problem')
 };
