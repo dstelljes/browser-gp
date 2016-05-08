@@ -1,6 +1,6 @@
 d3.demo = {};
-
 d3.demo = {};
+
 d3.demo.canvas = function(root) {
 
     "use strict";
