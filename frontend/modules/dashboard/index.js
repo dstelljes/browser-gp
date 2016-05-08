@@ -49,4 +49,5 @@ angular.module('dashboard', ['checklist-model', 'ngStorage', 'ui.router'])
         url: '/:run'
       });
   })
+  .directive('variableType', require('./directives/variable_type'))
   .value('gp', gp);

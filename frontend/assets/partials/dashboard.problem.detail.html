@@ -26,5 +26,37 @@
     <div class="section-header">
       <h2>Test cases</h2>
     </div>
+
+    <button ng-click="addVariable()">Add variable</button>
+    <button ng-click="addTest()">Add test case</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th ng-repeat="variable in problem.variables">
+            <input type="text" ng-model="variable.name" />
+            <button type="button" ng-click="removeVariable($index)">Remove</button>
+            <variable-type ng-model="variable.type"></variable-type>
+          </th>
+
+          <th>
+            <div>Expected output</div>
+            <variable-type ng-model="problem.type"></variable-type>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="test in problem.tests">
+          <th ng-repeat="variable in problem.variables">
+            <input type="{{ variable.type }}" ng-model="test.inputs[$index]" />
+          </th>
+
+          <th>
+            <input type="{{ problem.type }}" ng-model="test.output" />
+          </th>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
