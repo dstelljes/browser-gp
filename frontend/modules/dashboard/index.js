@@ -43,6 +43,9 @@ angular.module('dashboard', ['checklist-model', 'ngStorage', 'ui.router'])
         resolve: {
           run: function($stateParams, problem) {
             return problem.runs[$stateParams.run];
+          },
+          tree: function(d3) {
+            return require('./graphs/tree')(d3);
           }
         },
         templateUrl: 'partials/dashboard.problem.run.html',
@@ -50,4 +53,5 @@ angular.module('dashboard', ['checklist-model', 'ngStorage', 'ui.router'])
       });
   })
   .directive('variableType', require('./directives/variable_type'))
-  .value('gp', gp);
+  .value('gp', gp)
+  .value('d3', d3);
