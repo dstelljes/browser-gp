@@ -1,14 +1,16 @@
-<label title="Boolean">
-  <input type="radio" ng-model="model" ng-value="'checkbox'" />
-  B
-</label>
+<div class="option-group">
+  <input id="type-checkbox-{{ $id }}" type="radio" ng-model="model" ng-value="'checkbox'" />
+  <label class="option" for="type-checkbox-{{ $id }}" title="Boolean">
+    Boolean
+  </label>
 
-<label title="Number">
-  <input type="radio" ng-model="model" ng-value="'number'" />
-  N
-</label>
+  <input id="type-number-{{ $id }}" type="radio" ng-model="model" ng-value="'number'" />
+  <label class="option" for="type-number-{{ $id }}" title="Number">
+    Number
+  </label>
 
-<label title="String">
-  <input type="radio" ng-model="model" ng-value="'string'" />
-  S
-</label>
+  <input id="type-string-{{ $id }}" type="radio" ng-model="model" ng-value="'string'" />
+  <label class="option" for="type-string-{{ $id }}" title="String">
+    String
+  </label>
+</div>

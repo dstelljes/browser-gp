@@ -29,20 +29,28 @@
 
     <table class="table input-matrix">
       <tr>
-        <th ng-repeat="variable in problem.variables">
-          <input class="input transparent" placeholder="<variable>" type="text" ng-model="variable.name" />
+        <th class="static-column" ng-repeat="variable in problem.variables">
+          <input class="input transparent column-label" placeholder="<variable>" type="text" ng-model="variable.name" />
           <variable-type ng-model="variable.type"></variable-type>
-          <button class="button fill" type="button" ng-click="removeVariable($index)">Remove</button>
+          <button class="button danger fill" type="button" ng-click="removeVariable($index)">Remove</button>
         </th>
+
+        <th></th>
+
+        <th class="static-column">
+          <div class="column-label">Expected output</div>
+          <variable-type ng-model="problem.type"></variable-type>
+        </th>
+
+        <th></th>
+      </tr>
+
+      <tr>
+        <td ng-repeat="variable in problem.variables"></td>
 
         <td class="action-row" rowspan="{{ problem.tests.length + 1 }}" ng-click="addVariable()">
           Add variable
         </td>
-
-        <th>
-          <div>Expected output</div>
-          <variable-type ng-model="problem.type"></variable-type>
-        </th>
       </tr>
 
       <tr ng-repeat="test in problem.tests">
@@ -55,7 +63,7 @@
         </td>
 
         <td>
-          <button class="button" ng-click="removeTest($index)">Remove</button>
+          <button class="button danger fill" ng-click="removeTest($index)">Remove</button>
         </td>
       </tr>
 

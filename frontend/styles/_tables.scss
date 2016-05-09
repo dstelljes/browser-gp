@@ -1,19 +1,73 @@
 .table {
-  border-collapse: collapse;
+  border-radius: 3px;
   border-spacing: 0;
 
   &.input-matrix {
+    input:checked + .option {
+      background-color: $blue;
+    }
+
+    td {
+      border-bottom: 1px solid $lighter-gray;
+      border-right: 1px solid $lighter-gray;
+
+      &:first-child {
+        border-left: 1px solid $lighter-gray;
+      }
+    }
+
     th {
-      border-bottom-width: 3px;
+      background-color: $dark-gray;
+      border-right: 1px solid $white;
+      color: $white;
+      font-weight: normal;
+      vertical-align: top;
+
+      &:last-child {
+        border-right: 0;
+      }
+
+      .input {
+        color: $white;
+      }
+    }
+
+    .column-label {
+      padding: 0.25em 0;
     }
 
     .input {
       text-align: center;
     }
+
+    .option-group {
+      border-bottom: 1px solid $white;
+      border-top: 1px solid $white;
+    }
   }
 
   td, th {
-    border: 1px solid $lighter-gray;
+    padding: 0;
+  }
+
+  tr:first-child {
+    th:first-child {
+      border-top-left-radius: 3px;
+    }
+
+    th:last-child {
+      border-top-right-radius: 3px;
+    }
+  }
+
+  tr:last-child {
+    td:first-child {
+      border-bottom-left-radius: 3px;
+    }
+
+    td:last-child {
+      border-bottom-right-radius: 3px;
+    }
   }
 
   .action-row {
@@ -21,5 +75,9 @@
     cursor: pointer;
     padding: 1em;
     text-align: center;
+  }
+
+  .static-column {
+    width: 200px;
   }
 }

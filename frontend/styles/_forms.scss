@@ -9,6 +9,16 @@
     border: 0;
   }
 
+  &.danger {
+    background-color: $red;
+    border: 1px solid darken($red, 10%);
+    color: $white;
+
+    &:hover {
+      background-color: darken($red, 5%);
+    }
+  }
+
   &.default {
     background-color: $lighter-gray;
     border: 1px solid darken($lighter-gray, 10%);
@@ -31,6 +41,7 @@
 
 
   &.fill {
+    border-width: 0;
     display: block;
     width: 100%;
   }
@@ -64,7 +75,23 @@
   &.transparent {
     background-color: transparent;
     border: 0;
-    padding: 0.25em 0;
     width: 100%;
+  }
+}
+
+.option-group {
+  display: flex;
+
+  [type=checkbox], [type=radio] {
+    display: none;
+  }
+
+  .option {
+    cursor: pointer;
+    flex-grow: 1;
+    font-size: 80%;
+    font-weight: bold;
+    padding: 0.25em 0;
+    text-transform: uppercase;
   }
 }
