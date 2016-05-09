@@ -19,6 +19,16 @@
     }
   }
 
+  &.danger {
+    background-color: $red;
+    border: 1px solid darken($red, 10%);
+    color: $white;
+
+    &:hover {
+      background-color: darken($red, 5%);
+    }
+  }
+
   &.ui {
     border-radius: 3px;
   }

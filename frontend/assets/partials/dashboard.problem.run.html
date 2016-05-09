@@ -3,33 +3,35 @@
 
 <program-tree canvas="tree" program="run.results[0].individuals.best"/>
 <div class="grid-row">
-  <div class="grid-1-2">
-    <h3>Constant set</h3>
 
-    <div ng-repeat="constant in run.constants track by $index">
-      <input type="number" ng-model="run.constants[$index]" />
-      <button ng-click="run.constants.splice($index, 1)">Remove</button>
+    <div class="grid-1-4">
+      <h3>Constant set</h3>
+      <div class="vpad" ng-repeat="constant in run.constants track by $index">
+        <input type="number" ng-model="run.constants[$index]" />
+        <button ng-click="run.constants.splice($index, 1)">Remove</button>
+      </div>
+      <br>
+      <button ng-click="run.constants.push(0)">Add constant</button>
     </div>
 
-    <button ng-click="run.constants.push(0)">Add constant</button>
 
-    <h3>Function set</h3>
-
-    <div ng-repeat="function in functions">
-      <label>
-        <input type="checkbox" checklist-model="run.functions" checklist-value="function" />
-        {{ function.name }}
-      </label>
+    <div class="grid-1-4">
+      <h3>Function set</h3>
+      <div ng-repeat="function in functions">
+        <label>
+          <input type="checkbox" checklist-model="run.functions" checklist-value="function" />
+          {{ function.name }}
+        </label>
+      </div>
     </div>
-  </div>
 
-  <div id="runZone" class="grid-1-2">
-    <button ng-click="evolve()" ng-hide="worker.running">BIG RED BUTTON</button>
-    <button ng-click="terminate()" ng-show="worker.running">AAAGH STOP</button>
 
-    <div id="runResultsWrapper">
+  <div id="runZone" class="grid-1-4">
+    <button ng-click="evolve()" ng-hide="worker.running" class="button ui danger btn-block">BIG RED BUTTON</button>
+    <button ng-click="terminate()" ng-show="worker.running" class="button ui danger btn-block">AAAGH STOP</button>
 
-      <div id="runResults" class="grid-1-2" ng-if="run.results.length">
+    <div id="runResultsWrapper" class="vpad">
+      <div id="runResults" ng-if="run.results.length">
         <table>
           <tr>
             <td class="generation">Generation</td>
@@ -37,14 +39,9 @@
           </tr>
         </table>
 
-
-        <!-- <div ng-repeat="result in run.results | orderBy: $index">
-        {{ result.generation }}, {{ result.scores.best }}
-      </div> -->
-
       <table>
-        <tr ng-repeat="result in run.results | orderBy: $index">
-          <td class="generation">{{ result.generation }}</td>
+        <tr ng-repeat="result in run.results | orderBy: $index :true" >
+          <td class="generation text-center">{{ result.generation }}</td>
           <td>{{ result.scores.best }}</td>
         </tr>
       </table>
@@ -52,6 +49,7 @@
     </div>
   </div>
   </div>
+
 </div>
 
 <a ui-sref="^">Back</a>

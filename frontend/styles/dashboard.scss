@@ -86,18 +86,33 @@
 
 
 /*For dashboard.problem.run*/
-#runResultsWrapper{
+.vpad{
+  padding-top: .6em;
+}
+
+.text-center{
+  text-align:center;
+}
+
+.btn-block{
+  width: 100%;
+}
+
+#runZone{
+  padding:1em;
+  border-style: solid;
+  border-color: grey;
+  min-width: 20em;
+  height: 20em;
 }
 
 #runResults{
   overflow:auto;
-  height: 15em;
   padding:1em;
-  min-width: 16em;
-  border-style: solid;
-  border-color: grey;
+  height: 15em;
+
 }
 
 .generation{
-  width: 6em;
+  min-width: 5em;
 }
