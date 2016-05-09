@@ -1,6 +1,7 @@
 .button {
   border: 0;
   cursor: pointer;
+  display: inline-block;
   font-family: $body-font-family;
   padding: 0.5em 1em;
   transition: 0.25s all;

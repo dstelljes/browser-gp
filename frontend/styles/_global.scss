@@ -5,6 +5,11 @@
   box-sizing: inherit;
 }
 
+a {
+  color: $blue;
+  text-decoration: none;
+}
+
 a:focus {
   outline: 0;
 }

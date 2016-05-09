@@ -4,22 +4,34 @@
 </div>
 
 <div ui-view>
-  <div class="problem-runs section">
-    <div class="section-header">
-      <h2>Run summary</h2>
-      <button class="button ui default" ng-click="addRun()">Add run</button>
+  <div class="grid-row">
+    <div class="grid-1-2 problem-runs section">
+      <div class="section-header">
+        <h2>Run summary</h2>
+        <button class="button ui default" ng-click="addRun()">Add run</button>
+      </div>
+
+      <div class="section-empty" ng-if="!problem.runs.length">
+        No runs yet!
+      </div>
+
+      <div class="list-group">
+        <a class="list-group-item" ng-repeat="(index, run) in problem.runs" ui-sref="problem.run({ run: index })">
+          <h3 class="list-group-header">
+            <span ng-if="!run.name">Run {{ index }}</span>
+            {{ run.name }}
+          </h3>
+
+          <button type="button" class="button ui danger" ng-click="removeRun(index)">Remove</button>
+        </a>
+      </div>
     </div>
 
-    <div class="section-empty" ng-if="!problem.runs.length">
-      No runs yet!
+    <div class="grid-1-2 problem-results section">
+      <div class="section-header">
+        
+      </div>
     </div>
-
-    <ul>
-      <li ng-repeat="(index, run) in problem.runs">
-        <a ui-sref="problem.run({ run: index })">{{ index }}</a>
-        <a ng-click="removeRun(index)">Remove</a>
-      </li>
-    </ul>
   </div>
 
   <div class="problem-tests section">

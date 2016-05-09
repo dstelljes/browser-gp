@@ -1,0 +1,27 @@
+.list-group {
+  list-style: none;
+  max-width: 90%;
+  padding: 0;
+}
+
+.list-group-header {
+  margin-top: 0;
+}
+
+.list-group-item {
+  border: 1px solid $lighter-gray;
+  border-collapse: collapse;
+  display: block;
+  margin-bottom: -1px;
+  padding: 1em;
+
+  &:first-child {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+}
