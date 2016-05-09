@@ -1,6 +1,6 @@
 <div class="problem-meta section">
   <input class="input inconspicuous large" placeholder="Untitled problem" ng-model="problem.name" />
-  <button class="button ui default" ng-click="removeProblem()">Remove problem</button>
+  <button class="button ui danger" ng-click="removeProblem()">Remove problem</button>
 </div>
 
 <div ui-view>
@@ -29,7 +29,7 @@
 
     <div class="grid-1-2 problem-results section">
       <div class="section-header">
-        
+
       </div>
     </div>
   </div>
@@ -80,7 +80,7 @@
       </tr>
 
       <tr>
-        <td class="action-row" colspan="0" ng-click="addTest()">
+        <td class="action-row" colspan="{{ problem.variables.length + 3 }}" ng-click="addTest()">
           Add test case
         </td>
       </tr>

@@ -1,7 +1,8 @@
-<h2>{{ name }}</h2>
+<div class="problem-meta section">
+  <input class="input inconspicuous medium" placeholder="Untitled run" ng-model="run.name" />
+  <a class="button ui default" ui-sref="^">Back</a>
+</div>
 
-
-<program-tree canvas="tree" program="run.results[0].individuals.best"/>
 <div class="grid-row">
 
     <div class="grid-1-4">
@@ -52,4 +53,4 @@
 
 </div>
 
-<a ui-sref="^">Back</a>
+<program-tree canvas="tree" program="run.results[0].individuals.best"></program-tree>
