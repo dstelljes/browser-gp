@@ -1,0 +1,89 @@
+<div class="problem-meta section">
+  <input class="input inconspicuous large" placeholder="Untitled problem" ng-model="problem.name" />
+  <button class="button ui danger" ng-click="removeProblem()">Remove problem</button>
+</div>
+
+<div ui-view>
+  <div class="grid-row">
+    <div class="grid-1-2 problem-runs section">
+      <div class="section-header">
+        <h2>Run summary</h2>
+        <button class="button ui default" ng-click="addRun()">Add run</button>
+      </div>
+
+      <div class="section-empty" ng-if="!problem.runs.length">
+        No runs yet!
+      </div>
+
+      <div class="list-group">
+        <a class="list-group-item" ng-repeat="(index, run) in problem.runs" ui-sref="problem.run({ run: index })">
+          <h3 class="list-group-header">
+            <span ng-if="!run.name">Run {{ index }}</span>
+            {{ run.name }}
+          </h3>
+
+          <button type="button" class="button ui danger" ng-click="removeRun(index)">Remove</button>
+        </a>
+      </div>
+    </div>
+
+    <div class="grid-1-2 problem-results section">
+      <div class="section-header">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="problem-tests section">
+    <div class="section-header">
+      <h2>Test cases</h2>
+    </div>
+
+    <table class="table input-matrix">
+      <tr>
+        <th class="static-column" ng-repeat="variable in problem.variables">
+          <input class="input transparent column-label" placeholder="<variable>" type="text" ng-model="variable.name" />
+          <variable-type ng-model="variable.type"></variable-type>
+          <button class="button danger fill" type="button" ng-click="removeVariable($index)">Remove</button>
+        </th>
+
+        <th></th>
+
+        <th class="static-column">
+          <div class="column-label">Expected output</div>
+          <variable-type ng-model="problem.type"></variable-type>
+        </th>
+
+        <th></th>
+      </tr>
+
+      <tr>
+        <td ng-repeat="variable in problem.variables"></td>
+
+        <td class="action-row" rowspan="{{ problem.tests.length + 1 }}" ng-click="addVariable()">
+          Add variable
+        </td>
+      </tr>
+
+      <tr ng-repeat="test in problem.tests">
+        <td ng-repeat="variable in problem.variables">
+          <input class="input transparent" type="{{ variable.type }}" step="any" ng-model="test.inputs[$index]" />
+        </td>
+
+        <td>
+          <input class="input transparent" type="{{ problem.type }}" step="any" ng-model="test.output" />
+        </td>
+
+        <td>
+          <button class="button danger fill" ng-click="removeTest($index)">Remove</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="action-row" colspan="{{ problem.variables.length + 3 }}" ng-click="addTest()">
+          Add test case
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

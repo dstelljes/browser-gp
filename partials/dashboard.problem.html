@@ -1,0 +1,31 @@
+<div class="dashboard">
+  <div class="sidebar pane">
+    <h1 class="brand">
+      <a ui-sref="problem">
+        browser-gp
+      </a>
+    </h1>
+
+    <button class="problem-add button" type="button" ng-click="addProblem()">
+      New problem
+    </button>
+
+    <ul class="problem-nav">
+      <li ng-repeat="(id, problem) in problems">
+        <a class="problem-item" ui-sref="problem.detail({ problem: id })" ui-sref-active="active">
+          <i ng-if="!problem.name">{{ id }}</i>
+          {{ problem.name }}
+        </a>
+
+        <a class="run-item" ng-repeat="run in problem.runs" ui-sref="problem.run({ problem: id, run: $index })" ui-sref-active="active">
+          <span ng-if="!run.name">Run {{ $index }}</span>
+          {{ run.name }}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="body pane">
+    <div ui-view></div>
+  </div>
+</div>

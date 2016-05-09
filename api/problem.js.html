@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: problem.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: problem.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file
+ * Contains the problem class.
+ */
+
+/**
+ * Receives generational information from a run.
+ *
+ * @callback ResultsCallback
+ *
+ * @param {number} generation
+ * The generation number.
+ *
+ * @param {Object.&lt;string, number>} scores
+ * Score information.
+ * @param {number} scores.best
+ * The score of the fittest individual in the population.
+ *
+ * @param {Object.&lt;string, Program>} individuals
+ * Notable individuals.
+ * @param {number} individuals.best
+ * The fittest individual in the population.
+ *
+ * @param {Array.&lt;Program>} population
+ * The population.
+ */
+
+/**
+ * @typedef {Object} Case
+ * A case that describes the desired output of an evolved program based on some
+ * inputs.
+ * @property {Object.&lt;symbol, number>} inputs
+ * Input values keyed by variable symbol.
+ * @property {number} output
+ * The expected output.
+ */
+
+'use strict';
+
+var grow = require('./generators/grow');
+
+var point = require('./mutators/point');
+
+var random = require('./random/native')();
+
+var crossover = require('./recombinators/crossover');
+
+var error = require('./scorers/error');
+
+var fittest = require('./selectors/fittest');
+var tournament = require('./selectors/tournament');
+
+/**
+ * Constructs a problem instance.
+ *
+ * @class Problem
+ * @classdesc
+ * Defines a symbolic regression problem. Uses a set of expressions to evolve a
+ * model that matches a collection of inputs/outputs.
+ */
+var Problem = module.exports = function() {
+  //
+};
+
+/**
+ * Evolves a population.
+ *
+ * @param {Array.&lt;Program>} population
+ * The population to evolve.
+ *
+ * @returns {Array.&lt;Program>}
+ * The evolved population.
+ */
+Problem.prototype.evolve = function(population) {
+  var mutator = this.mutator();
+  var recombinator = this.recombinator();
+  var selector = this.selector();
+
+  var evolved = [];
+
+  for (var i = 0; i &lt; population.length; i++) {
+    var parents = [];
+
+    for (var j = 0; j &lt; recombinator.length; j++) {
+      parents.push(selector(population));
+    }
+
+    var child = mutator(recombinator(...parents));
+    evolved.push(child);
+  }
+
+  return evolved;
+};
+
+/**
+ * Creates an initial population and runs evolution for the specified number of
+ * generations.
+ *
+ * @param {ResultsCallback} [callback]
+ * The result callback to receive generational information.
+ */
+Problem.prototype.run = function(callback) {
+  // Create an initial population:
+  var generator = this.generator();
+  var population = [];
+
+  for (var i = 0; i &lt; this.populationSize; i++) {
+    population.push(generator(this.depth));
+  }
+
+  // Use the boring selector to find the best individual:
+  var scorer = this.scorer();
+  var selector = fittest(scorer, this.maximize);
+
+  for (var i = 0; i &lt; this.generations; i++) {
+    var bestIndividual = selector(population);
+    var bestScore = scorer(bestIndividual);
+
+    if (typeof callback === 'function') {
+      callback(i, {
+        best: bestScore
+      }, {
+        best: bestIndividual
+      }, population);
+    }
+
+    // If an acceptable solution is found, we're done:
+    if ((this.maximize &amp;&amp; bestScore > this.acceptable) || bestScore &lt; this.acceptable) {
+      break;
+    }
+
+    // Otherwise, continue evolving:
+    population = this.evolve(population);
+  }
+};
+
+/**
+ * The score at which a solution would be considered acceptable (i.e. when to
+ * stop evolving).
+ * @type {number}
+ */
+Problem.prototype.acceptable = 0.001;
+
+/**
+ * The test cases to score evolved programs against.
+ * @type {Array.&lt;Case>}
+ */
+Problem.prototype.cases = [];
+
+/**
+ * The constant set.
+ * @type {Array.&lt;boolean|number|string>}
+ */
+Problem.prototype.constants = [];
+
+/**
+ * The maximum depth a program can have. Defaults to 5.
+ * @type number
+ */
+Problem.prototype.depth = 5;
+
+/**
+ * The function set.
+ * @type {Array.&lt;function>}
+ */
+Problem.prototype.functions = [];
+
+/**
+ * The number of generations to evolve. Defaults to 50.
+ */
+Problem.prototype.generations = 50;
+
+/**
+ * The generator factory. Provides a program generator at runtime. By default,
+ * uses the grow generator at the specified maximum depth.
+ */
+Problem.prototype.generator = function() {
+  return grow(this.functions, [].concat(this.constants, this.variables), this.random);
+};
+
+/**
+ * Whether to maximize fitness. Minimizes by default.
+ */
+Problem.prototype.maximize = false;
+
+/**
+ * The mutator function factory. By default, does point mutation with probability
+ * 0.25 (per-node probability 0.05).
+ */
+Problem.prototype.mutator = function() {
+  var random = this.random;
+
+  var primitives = [].concat(this.constants, this.functions, this.variables);
+  var mutator = point(primitives, 0.05, random);
+
+  return function(program) {
+    return random.double() &lt; 0.25 ? mutator(program) : program;
+  };
+};
+
+/**
+ * The population size. By default, 1000.
+ * @type {number}
+ */
+Problem.prototype.populationSize = 1000;
+
+/**
+ * The random number generator. By default, Math.random.
+ * @type {PRNG}
+ */
+Problem.prototype.random = random;
+
+/**
+ * The recombinator function factory. By default, does crossover with probability
+ * 0.75.
+ */
+Problem.prototype.recombinator = function() {
+  var random = this.random;
+  var recombinator = crossover(random);
+
+  return function(a, b) {
+    return random.double() &lt; 0.5 ? recombinator(a, b) : b;
+  };
+};
+
+/**
+ * The scorer factory. Provides a scorer at runtime. By default, creates an
+ * error scorer on the supplied test cases.
+ * @type {function}
+ */
+Problem.prototype.scorer = function() {
+  return error(this.cases);
+};
+
+/**
+ * The selection function factory. By default, creates a tournment with size 10.
+ **/
+Problem.prototype.selector = function() {
+  return tournament(10, this.random, this.scorer());
+};
+
+/**
+ * The variable set. Should match the variables needed by the test cases.
+ * @type {Array.&lt;symbol>}
+ */
+Problem.prototype.variables = [];
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-program.html">program</a></li></ul><h3>Classes</h3><ul><li><a href="PRNG.html">PRNG</a></li><li><a href="Problem.html">Problem</a></li></ul><h3>Namespaces</h3><ul><li><a href="functions.html">functions</a></li><li><a href="generators.html">generators</a></li><li><a href="mutators.html">mutators</a></li><li><a href="random.html">random</a></li><li><a href="recombinators.html">recombinators</a></li><li><a href="scorers.html">scorers</a></li><li><a href="selectors.html">selectors</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon May 09 2016 00:53:02 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

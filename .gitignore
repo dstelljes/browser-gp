@@ -1,0 +1,9 @@
+# logs
+*.log*
+
+# dependencies
+bower_components
+node_modules
+
+# build artifacts
+build

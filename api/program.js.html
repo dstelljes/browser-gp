@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: program.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: program.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file
+ * Contains program utility functions.
+ */
+
+/**
+ * @typedef {Array.&lt;(boolean|function|number|string|symbol)>} Program
+ * A program represented in prefix notation. Functions are functions; booleans,
+ * numbers, and strings are constants; symbols are variables.
+ */
+
+/**
+ * @module program
+ */
+
+'use strict';
+
+/**
+ * Evaluates a program with the specified values.
+ *
+ * @function
+ *
+ * @see https://en.wikipedia.org/wiki/Polish_notation
+ *
+ * @param {Program} program
+ * A program representation.
+ *
+ * @param {Object.&lt;symbol, boolean|number|string>} [values={}]
+ * Variable substitutions keyed by name.
+ *
+ * @returns {number}
+ * The result of the evaluation.
+ */
+var evaluate = module.exports.evaluate = function(program, values) {
+  if (typeof values === 'undefined') values = {};
+
+  var stack = [];
+
+  for (var i = program.length - 1; i >= 0; i--) {
+    var primitive = program[i];
+
+    switch (typeof primitive) {
+      case 'function':
+        var operands = [];
+
+        for (var j = 0; j &lt; primitive.length; j++) {
+          if (stack.length &lt; 1) {
+            throw new Error('Not enough arguments for function at index ' + i);
+          }
+
+          operands.push(stack.pop());
+        }
+
+        stack.push(primitive.apply(undefined, operands));
+        break;
+
+      case 'boolean':
+      case 'number':
+      case 'string':
+        stack.push(primitive);
+        break;
+
+      case 'symbol':
+        var value = values[primitive];
+
+        if (typeof value === 'undefined') {
+          throw new Error('Unexpected variable at index ' + i);
+        }
+
+        stack.push(value);
+        break;
+
+      default:
+        throw new Error('Invalid primitive at index ' + i);
+    }
+  }
+
+  return stack.pop();
+};
+
+/**
+ * Returns the program subtree rooted at a given point.
+ *
+ * @function
+ *
+ * @param {Program} program
+ * A program representation.
+ *
+ * @param {number} root
+ * The index of the root node.
+ *
+ * @returns {Program}
+ * The resulting program subtree.
+ */
+var extractSubtree = module.exports.extractSubtree = function(program, root) {
+  var tree = [];
+
+  for (var i = root; i &lt; root + findSubtreeLength(program, root); i++) {
+    tree.push(program[i]);
+  }
+
+  return tree;
+};
+
+/**
+ * Finds the length of a subtree rooted at a given point.
+ *
+ * @function
+ *
+ * @param {Program} program
+ * A program representation.
+ *
+ * @param {number} root
+ * The index of the root node.
+ *
+ * @returns {number}
+ * The length of the subtree.
+ */
+var findSubtreeLength = module.exports.findSubtreeLength = function(program, root) {
+  var counter = 1, pointer = root;
+
+  while (counter > 0) {
+    if (pointer >= program.length) {
+      throw new Error('Invalid program');
+    }
+
+    var primitive = program[pointer];
+
+    if (typeof primitive === 'function') {
+      counter += primitive.length; //returns the number of args that the primitve takes
+    }
+
+    counter--;
+    pointer++;
+  }
+
+  return pointer - root;
+};
+
+/**
+ * Converts a program representation to an s-expression.
+ *
+ * @param {Program} program
+ * The program to stringify.
+ *
+ * @returns {string}
+ * The program as an s-expression.
+ */
+var lispify = module.exports.lispify = function(program) {
+  var pointer = 0;
+  var expression = [];
+
+  while (pointer &lt; program.length) {
+    var primitive = program[pointer];
+
+    switch (typeof primitive) {
+      case 'function':
+        var subtree = extractSubtree(program, pointer);
+        subtree.shift();
+
+        expression.push('(' + primitive, lispify(subtree) + ')');
+        pointer += findSubtreeLength(program, pointer);
+
+        break;
+
+      case 'boolean':
+      case 'number':
+        expression.push(primitive);
+        pointer += 1;
+
+        break;
+
+      case 'string':
+        expression.push('"' + primitive + '"');
+        pointer += 1;
+
+        break;
+
+      case 'symbol':
+        expression.push(Symbol.keyFor(primitive) || '&lt;variable>');
+        pointer += 1;
+
+        break;
+
+      default:
+        throw new Error('Invalid primitive at index ' + pointer);
+    }
+  }
+
+  return expression.join(' ');
+};
+
+/**
+ * Converts a program representation to a nested structure.
+ *
+ * @param {Program} program
+ * The program to treeify.
+ *
+ * @returns {Array}
+ * The nested program.
+ */
+var treeify = module.exports.treeify = function(program) {
+  var stack = [];
+
+  for (var i = program.length - 1; i >= 0; i--) {
+    var primitive = program[i];
+
+    switch (typeof primitive) {
+      case 'function':
+        var operands = [];
+
+        for (var j = 0; j &lt; primitive.length; j++) {
+          if (stack.length &lt; 1) {
+            throw new Error('Not enough arguments for function at index ' + i);
+          }
+
+          operands.push(stack.pop());
+        }
+
+        stack.push([primitive.toString(), ...operands]);
+        break;
+
+      case 'boolean':
+      case 'number':
+      case 'string':
+        stack.push(primitive);
+        break;
+
+      case 'symbol':
+        stack.push(Symbol.keyFor(primitive) || '&lt;variable>');
+        break;
+
+      default:
+        throw new Error('Invalid primitive at index ' + i);
+    }
+  }
+
+  return stack.pop();
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-program.html">program</a></li></ul><h3>Classes</h3><ul><li><a href="PRNG.html">PRNG</a></li><li><a href="Problem.html">Problem</a></li></ul><h3>Namespaces</h3><ul><li><a href="functions.html">functions</a></li><li><a href="generators.html">generators</a></li><li><a href="mutators.html">mutators</a></li><li><a href="random.html">random</a></li><li><a href="recombinators.html">recombinators</a></li><li><a href="scorers.html">scorers</a></li><li><a href="selectors.html">selectors</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon May 09 2016 00:53:02 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
