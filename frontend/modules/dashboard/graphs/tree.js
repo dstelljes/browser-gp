@@ -1,5 +1,5 @@
 'use strict';
-
+//Source: http://www.billdwhite.com/wordpress/2014/02/03/d3-pan-and-zoom-reuse-demo/
 var tree = module.exports = function(d3) {
 
   var canvas = module.exports = function(root) {
