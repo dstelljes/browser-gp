@@ -10,7 +10,7 @@ var run = function(problem, run) {
   // Copy the easy properties:
   runner.depth = run.depth;
   runner.generations = run.generations;
-  runner.maximize = problem.maximize;
+  runner.maximize = run.maximize;
 
   // Set constants:
   runner.constants = run.constants;
