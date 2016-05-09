@@ -177,8 +177,7 @@ var lispify = module.exports.lispify = function(program) {
         break;
 
       case 'symbol':
-        // @TODO: figure out how to actually substitute stuff
-        expression.push('<variable>');
+        expression.push(Symbol.keyFor(primitive) || '<variable>');
         pointer += 1;
 
         break;
@@ -189,4 +188,52 @@ var lispify = module.exports.lispify = function(program) {
   }
 
   return expression.join(' ');
+};
+
+/**
+ * Converts a program representation to a nested structure.
+ *
+ * @param {Program} program
+ * The program to treeify.
+ *
+ * @returns {Array}
+ * The nested program.
+ */
+var treeify = module.exports.treeify = function(program) {
+  var stack = [];
+
+  for (var i = program.length - 1; i >= 0; i--) {
+    var primitive = program[i];
+
+    switch (typeof primitive) {
+      case 'function':
+        var operands = [];
+
+        for (var j = 0; j < primitive.length; j++) {
+          if (stack.length < 1) {
+            throw new Error('Not enough arguments for function at index ' + i);
+          }
+
+          operands.push(stack.pop());
+        }
+
+        stack.push([primitive.toString(), ...operands]);
+        break;
+
+      case 'boolean':
+      case 'number':
+      case 'string':
+        stack.push(primitive);
+        break;
+
+      case 'symbol':
+        stack.push(Symbol.keyFor(primitive) || '<variable>');
+        break;
+
+      default:
+        throw new Error('Invalid primitive at index ' + i);
+    }
+  }
+
+  return stack.pop();
 };
