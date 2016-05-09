@@ -121,3 +121,21 @@ describe('conversion to s-expression', function() {
     expect(gp.program.lispify(compound)).toBe('(- (count (join <variable> "cake")) 4)');
   });
 });
+
+describe('conversion to tree', function() {
+  it('handles programs without functions', function() {
+    expect(gp.program.treeify(single)).toEqual(42);
+  });
+
+  it('handles programs one level deep', function() {
+    expect(gp.program.treeify(simple)).toEqual(['+', 2, 3]);
+  });
+
+  it('handles programs multiple levels deep', function() {
+    expect(gp.program.treeify(nested)).toEqual(['+', ['-', 1, 2], 3]);
+  });
+
+  it('substitutes symbols', function() {
+    expect(gp.program.treeify(compound)).toEqual(['-', ['count', ['join', '<variable>', 'cake']], 4]);
+  });
+});

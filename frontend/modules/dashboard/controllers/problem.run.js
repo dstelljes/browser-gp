@@ -48,7 +48,7 @@ module.exports = function($scope, d3, problem, run, tree) {
     worker.onmessage = function(message) {
       switch (message.data.event) {
         case 'evolved':
-          console.log('Generation ' + message.data.generation + ' had best score ' + message.data.best);
+          $scope.run.results.push(message.data);
           break;
 
         case 'finished':
@@ -56,9 +56,19 @@ module.exports = function($scope, d3, problem, run, tree) {
           break;
 
         case 'started':
+          $scope.run.results = [];
           $scope.worker.running = true;
           break;
       }
+
+      $scope.$apply();
     };
   };
+
+  $scope.terminate = function() {
+    if ($scope.worker.instance) {
+      $scope.worker.instance.terminate();
+      $scope.worker.running = false;
+    }
+  }
 };

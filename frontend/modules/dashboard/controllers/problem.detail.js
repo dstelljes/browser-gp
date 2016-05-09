@@ -19,7 +19,8 @@ module.exports = function($scope, $state, $stateParams, problem) {
       recombinations: [],
       maximize: true,
       random: null,
-      selection: null
+      selection: null,
+      results: []
     });
 
     $state.go('problem.run', {
