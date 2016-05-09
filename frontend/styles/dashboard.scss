@@ -37,8 +37,8 @@
 
 .problem-item {
   background-color: $blue;
-  display: block;
   color: $white;
+  display: block;
   padding: 0.5em 1em;
   text-decoration: none;
 
@@ -51,6 +51,16 @@
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.run-item {
+  color: $white;
+  display: block;
+  padding: 0.5em 2em;
+
+  &.active {
+    font-weight: bold;
+  }
 }
 
 .section {

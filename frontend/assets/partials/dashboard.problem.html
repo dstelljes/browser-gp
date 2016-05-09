@@ -16,6 +16,11 @@
           <i ng-if="!problem.name">{{ id }}</i>
           {{ problem.name }}
         </a>
+
+        <a class="run-item" ng-repeat="run in problem.runs" ui-sref="problem.run({ problem: id, run: $index })" ui-sref-active="active">
+          <span ng-if="!run.name">Run {{ $index }}</span>
+          {{ run.name }}
+        </a>
       </li>
     </ul>
   </div>
