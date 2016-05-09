@@ -1,16 +1,24 @@
 'use strict';
 
-module.exports = function() {
+module.exports = function(d3) {
 
     var link = function(scope, element){
-      var canvas = tree(makeTree(scope.tree));
-      element.call(canvas);
-      canvas.loadTree();
+      function draw(){
+        var canvas = scope.canvas(makeTree(scope.program));
+        console.log(element);
+        d3.selectAll(element).call(canvas);
+        canvas.loadTree();
+        console.log("toot toot");
+      }
+
+      scope.$watch("tree", draw);
     }
+
 
     return{
       scope: {
-        tree: '='
+        canvas: '=',
+        program: '='
       },
       link:link
     };

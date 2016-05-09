@@ -53,5 +53,6 @@ angular.module('dashboard', ['checklist-model', 'ngStorage', 'ui.router'])
       });
   })
   .directive('variableType', require('./directives/variable_type'))
+  .directive('programTree', require('./directives/program_tree'))
   .value('gp', gp)
   .value('d3', d3);

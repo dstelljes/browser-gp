@@ -4,6 +4,7 @@
 module.exports = function($scope, d3, problem, run, tree) {
   $scope.problem = problem;
   $scope.run = run;
+  $scope.tree = tree;
   $scope.worker = {
     instance: null,
     running: false
