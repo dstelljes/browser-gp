@@ -1,10 +1,7 @@
 <h2>{{ name }}</h2>
 
 
-<input class="input inconspicuous" placeholder="Sample Tree"/>
-<button onclick="drawTree()">Generate Tree</button>
-
-<div id="tree-container"></div>
+<tree-container tree="run.results[0].individuals.best"/>
 <div class="grid-row">
   <div class="grid-1-2">
     <h3>Constant set</h3>
