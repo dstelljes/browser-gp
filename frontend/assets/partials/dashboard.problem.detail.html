@@ -54,11 +54,11 @@
       <tbody>
         <tr ng-repeat="test in problem.tests">
           <th ng-repeat="variable in problem.variables">
-            <input type="{{ variable.type }}" ng-model="test.inputs[$index]" />
+            <input type="{{ variable.type }}" step="any" ng-model="test.inputs[$index]" />
           </th>
 
           <th>
-            <input type="{{ problem.type }}" ng-model="test.output" />
+            <input type="{{ problem.type }}" step="any" ng-model="test.output" />
           </th>
         </tr>
       </tbody>

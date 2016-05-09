@@ -28,7 +28,7 @@ var run = function(problem, run) {
   // Set variables:
   problem.variables.forEach(function(variable) {
     // Symbol.for is cool in this context because the worker is isolated.
-    runner.variables.push(Symbol.for(variable));
+    runner.variables.push(Symbol.for(variable.name));
   });
 
   // Replace variables with their symbolic equivalents:
@@ -55,13 +55,16 @@ var run = function(problem, run) {
     event: 'started'
   });
 
-  console.log(runner);
-
   runner.run(function(generation, scores, individuals) {
     window.postMessage({
       event: 'evolved',
       generation: generation,
-      best: scores.best
+      individuals: {
+        best: gp.program.treeify(individuals.best)
+      },
+      scores: {
+        best: scores.best
+      }
     });
   });
 

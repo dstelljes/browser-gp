@@ -24,6 +24,12 @@
   <div class="grid-1-2">
     <button ng-click="evolve()" ng-hide="worker.running">BIG RED BUTTON</button>
     <button ng-click="terminate()" ng-show="worker.running">AAAGH STOP</button>
+
+    <div ng-if="run.results.length">
+      <div ng-repeat="result in run.results | orderBy: $index">
+        {{ result.generation }}, {{ result.scores.best }}
+      </div>
+    </div>
   </div>
 </div>
 
