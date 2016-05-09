@@ -83,3 +83,21 @@
     }
   }
 }
+
+
+/*For dashboard.problem.run*/
+#runResultsWrapper{
+}
+
+#runResults{
+  overflow:auto;
+  height: 15em;
+  padding:1em;
+  min-width: 16em;
+  border-style: solid;
+  border-color: grey;
+}
+
+.generation{
+  width: 6em;
+}

@@ -23,15 +23,34 @@
     </div>
   </div>
 
-  <div class="grid-1-2">
+  <div id="runZone" class="grid-1-2">
     <button ng-click="evolve()" ng-hide="worker.running">BIG RED BUTTON</button>
     <button ng-click="terminate()" ng-show="worker.running">AAAGH STOP</button>
 
-    <div ng-if="run.results.length">
-      <div ng-repeat="result in run.results | orderBy: $index">
+    <div id="runResultsWrapper">
+
+      <div id="runResults" class="grid-1-2" ng-if="run.results.length">
+        <table>
+          <tr>
+            <td class="generation">Generation</td>
+            <td>Best Individual</td>
+          </tr>
+        </table>
+
+
+        <!-- <div ng-repeat="result in run.results | orderBy: $index">
         {{ result.generation }}, {{ result.scores.best }}
-      </div>
+      </div> -->
+
+      <table>
+        <tr ng-repeat="result in run.results | orderBy: $index">
+          <td class="generation">{{ result.generation }}</td>
+          <td>{{ result.scores.best }}</td>
+        </tr>
+      </table>
+
     </div>
+  </div>
   </div>
 </div>
 
