@@ -16,9 +16,9 @@ module.exports = function($scope, $state, $stateParams, problem) {
       functions: [],
       generations: 50,
       mutations: [],
-      recombinations: [],
-      maximize: true,
+      maximize: false,
       random: null,
+      recombinations: [],
       selection: null,
       results: []
     });
@@ -53,5 +53,9 @@ module.exports = function($scope, $state, $stateParams, problem) {
       inputs: [],
       output: ''
     });
+  };
+
+  $scope.removeTest = function(index) {
+    $scope.problem.tests.splice(index, 1);
   };
 };

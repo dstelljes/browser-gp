@@ -29,6 +29,12 @@
     }
   }
 
+
+  &.fill {
+    display: block;
+    width: 100%;
+  }
+
   &.ui {
     border-radius: 3px;
   }
@@ -53,5 +59,12 @@
 
   &.large {
     font-size: 2.5em;
+  }
+
+  &.transparent {
+    background-color: transparent;
+    border: 0;
+    padding: 0.25em 0;
+    width: 100%;
   }
 }

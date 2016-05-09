@@ -27,41 +27,43 @@
       <h2>Test cases</h2>
     </div>
 
-    <label>
-      <input type="checkbox" ng-model="problem.maximize" />
-      Maximize fitness
-    </label>
+    <table class="table input-matrix">
+      <tr>
+        <th ng-repeat="variable in problem.variables">
+          <input class="input transparent" placeholder="<variable>" type="text" ng-model="variable.name" />
+          <variable-type ng-model="variable.type"></variable-type>
+          <button class="button fill" type="button" ng-click="removeVariable($index)">Remove</button>
+        </th>
 
-    <button ng-click="addVariable()">Add variable</button>
-    <button ng-click="addTest()">Add test case</button>
+        <td class="action-row" rowspan="{{ problem.tests.length + 1 }}" ng-click="addVariable()">
+          Add variable
+        </td>
 
-    <table>
-      <thead>
-        <tr>
-          <th ng-repeat="variable in problem.variables">
-            <input type="text" ng-model="variable.name" />
-            <button type="button" ng-click="removeVariable($index)">Remove</button>
-            <variable-type ng-model="variable.type"></variable-type>
-          </th>
+        <th>
+          <div>Expected output</div>
+          <variable-type ng-model="problem.type"></variable-type>
+        </th>
+      </tr>
 
-          <th>
-            <div>Expected output</div>
-            <variable-type ng-model="problem.type"></variable-type>
-          </th>
-        </tr>
-      </thead>
+      <tr ng-repeat="test in problem.tests">
+        <td ng-repeat="variable in problem.variables">
+          <input class="input transparent" type="{{ variable.type }}" step="any" ng-model="test.inputs[$index]" />
+        </td>
 
-      <tbody>
-        <tr ng-repeat="test in problem.tests">
-          <th ng-repeat="variable in problem.variables">
-            <input type="{{ variable.type }}" step="any" ng-model="test.inputs[$index]" />
-          </th>
+        <td>
+          <input class="input transparent" type="{{ problem.type }}" step="any" ng-model="test.output" />
+        </td>
 
-          <th>
-            <input type="{{ problem.type }}" step="any" ng-model="test.output" />
-          </th>
-        </tr>
-      </tbody>
+        <td>
+          <button class="button" ng-click="removeTest($index)">Remove</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="action-row" colspan="0" ng-click="addTest()">
+          Add test case
+        </td>
+      </tr>
     </table>
   </div>
 </div>

@@ -2,6 +2,7 @@
 
 @import 'forms';
 @import 'grid';
+@import 'tables';
 @import 'tree';
 
 .body {
@@ -92,10 +93,6 @@
 
 .text-center{
   text-align:center;
-}
-
-.btn-block{
-  width: 100%;
 }
 
 #runZone{
