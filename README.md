@@ -6,23 +6,24 @@ inspired in part by [TinyGP][tinygp] and was initially developed by
 [Tom Harren][tom] and [Dan Stelljes][dan] for [Nic McPhee][nic]'s Evolutionary
 Computation class at [UMM][mo-sweet-mo].
 
-Building
+Contributing and building
 --
+
+After cloning, run `npm install` to install tooling and frontend dependencies.
+Node 5.x or better recommended. Also check out [nvm][nvm].
+
 If you want to...
 
-*   Build the web frontend:
-  1. `npm install` to install tooling. We recommend using [nvm][nvm] to install
-  a 5.*  version of npm.
-  2. `bower install` to install frontend dependencies.
-  Requires global install of [Bower][bower] (`npm install -g bower`).
-  3. `brunch watch --server` to serve the app locally.
-  Requires global install of [Brunch][brunch] (`npm install -g brunch`).
+*   Play with the web frontend:
 
+    1.  `npm run watch` to rebuild on changes and `npm run serve` to serve the
+        app locally.
 
-*   Run tests: `npm test`. Requires global install of [Jasmine][jasmine].
+    2.  `npm run build:app` to build the frontend for release.
 
-*   Generate documentation: `jsdoc -c jsdoc.json`.
-    Requires global install of [JSDoc][jsdoc].
+*   Run tests: `npm test`
+
+*   Generate documentation: `npm run build:docs`
 
 Build artifacts (documentation and frontend files) are dumped into the `build`
 directory.
@@ -33,11 +34,7 @@ License
 Project code is released under the MIT License, the Denny's of free software
 licenses.
 
-[brunch]: http://brunch.io/
-[bower]: http://bower.io/
 [dan]: https://github.com/dstelljes
-[jasmine]: https://jasmine.github.io/
-[jsdoc]: http://usejsdoc.org/
 [mo-sweet-mo]: http://morris.umn.edu/
 [nic]: http://facultypages.morris.umn.edu/~mcphee/
 [nvm]: https://github.com/creationix/nvm/blob/master/README.markdown

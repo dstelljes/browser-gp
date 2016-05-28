@@ -3,12 +3,21 @@
   "version": "0.0.1",
   "main": "library/index.js",
   "scripts": {
-    "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json"
+    "build:app": "brunch build -p",
+    "build:docs": "jsdoc -c jsdoc.json",
+    "postinstall": "bower install",
+    "serve": "brunch watch -s",
+    "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json",
+    "watch": "brunch watch"
   },
   "author": "Dan Stelljes <dan@stellj.es>",
   "license": "MIT",
   "devDependencies": {
+    "bower": "^1.7.9",
+    "brunch": "^2.8.0",
+    "jasmine": "^2.4.1",
     "javascript-brunch": "^2.0.0",
+    "jsdoc": "^3.4.0",
     "sass-brunch": "^2.6.2"
   }
 }
