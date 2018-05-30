@@ -16,7 +16,8 @@ EMSCRIPTEN_BINDINGS(tinygp) {
     .field("lengthLimit", &parameters::length_limit)
     .field("mutationProbability", &parameters::mutation_probability)
     .field("populationSize", &parameters::population_size)
-    .field("tournamentSize", &parameters::tournament_size);
+    .field("tournamentSize", &parameters::tournament_size)
+    .field("variableCount", &parameters::variable_count);
 
   emscripten::class_<TinyGP>("TinyGP")
     .constructor<std::vector<test_case>, parameters, long>()

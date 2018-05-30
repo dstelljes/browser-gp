@@ -33,6 +33,12 @@ public:
 
   /**
    * @return
+   * A pseudorandom, uniformly distributed int value in [0, bound).
+   */
+  int next_int(int bound);
+
+  /**
+   * @return
    * A pseudoranom, uniformly distributed long value.
    */
   long next_long();
@@ -44,12 +50,12 @@ public:
   void set_seed(unsigned long seed);
 
 private:
-  const static unsigned long addend = 11L;
-  const static unsigned long mask = (1L << 48) - 1;
-  const static unsigned long multiplier = 25214903917L;
+  static const unsigned long ADDEND = 11L;
+  static const unsigned long MASK = (1L << 48) - 1;
+  static const unsigned long MULTIPLIER = 25214903917L;
 
-  unsigned static long get_seed_uniquifier();
-  unsigned static long scramble(unsigned long seed);
+  static unsigned long get_seed_uniquifier();
+  static unsigned long scramble(unsigned long seed);
 
   unsigned long seed;
 

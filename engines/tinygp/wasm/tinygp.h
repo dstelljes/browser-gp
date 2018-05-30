@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "random.h"
+
 using individual = std::vector<char16_t>;
 using test_case = std::vector<double>;
 
@@ -40,6 +42,9 @@ struct parameters {
   /** The size of the tournament. */
   int tournament_size;
 
+  /** The number of variables in a test case. */
+  int variable_count;
+
 };
 
 /**
@@ -60,7 +65,7 @@ public:
    * @param seed
    * An optional random seed. If less than 0, a seed will be generated.
    */
-  TinyGP(std::vector<test_case> cases, parameters parameters, long seed = -1);
+  TinyGP(const std::vector<test_case> &cases, const parameters &parameters, long seed = -1);
 
   /**
    * Calculates the fitness of an individual.
@@ -69,7 +74,7 @@ public:
    * The sum of the absolute differences between the individual output and the
    * desired output.
    */
-  double calculate_fitness(individual individual) const;
+  double calculate_fitness(const individual &individual) const;
 
   /**
    * Evolves a generation.
@@ -112,6 +117,12 @@ public:
   std::vector<individual> get_population() const;
 
 private:
+  enum operations { add = 110, subtract, multiply, divide };
+
+  static const int FUNCTION_SET_START = operations::add;
+  static const int FUNCTION_SET_END = operations::divide;
+
+  int constant_count;
   double crossover_probability;
   int depth_limit;
   int generation_limit;
@@ -119,10 +130,16 @@ private:
   double mutation_probability;
   int population_size;
   int tournament_size;
+  int variable_count;
 
   int generation = 0;
 
   std::vector<test_case> cases;
-  std::vector<double> constants;
-  std::vector<individual> population;
+  std::vector<double> constants = {};
+  std::vector<individual> population = {};
+
+  Random random;
+
+  individual create_random_individual(int depth_limit);
+  int grow_individual(individual &individual, int position, int length_limit, int depth_limit);
 };
