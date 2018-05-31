@@ -141,5 +141,5 @@ private:
   Random random;
 
   individual create_random_individual(int depth_limit);
-  int grow_individual(individual &individual, int position, int length_limit, int depth_limit);
+  bool grow_individual(individual &individual, int length_limit, int depth_limit);
 };

@@ -17,7 +17,7 @@ TinyGP::TinyGP(const std::vector<test_case> &cases, const parameters &parameters
   int min = parameters.constant_minimum;
   int max = parameters.constant_maximum;
 
-  for (int i = 0; i < constant_count; i++) {
+  for (int i = 0; i < FUNCTION_SET_START; i++) {
     constants.push_back((max - min) * random.next_double() + min);
   }
 
@@ -57,41 +57,37 @@ std::vector<individual> TinyGP::get_population() const {
 individual TinyGP::create_random_individual(int depth_limit) {
   individual result = {};
 
-  int length;
-
-  do {
-    length = grow_individual(result, 0, length_limit, depth_limit);
-  }
-  while (length < 0);
+  while (grow_individual(result, length_limit, depth_limit));
 
   return result;
 }
 
-int TinyGP::grow_individual(individual &individual, int position, int length_limit, int depth_limit) {
+bool TinyGP::grow_individual(individual &individual, int length_limit, int depth_limit) {
   char16_t primitive = random.next_int(2);
+  int size = individual.size();
 
-  if (position >= length_limit) {
-    return -1;
+  if (size >= length_limit) {
+    return true;
   }
 
-  if (position == 0) {
+  if (size == 0) {
     primitive = 1;
   }
 
   if (primitive == 0 || depth_limit == 0) {
     primitive = (char16_t)random.next_int(constant_count + variable_count);
-    individual[position] = primitive;
+    individual.push_back(primitive);
 
-    return position + 1;
+    return false;
   }
   else {
     primitive = (char16_t)(random.next_int(FUNCTION_SET_END - FUNCTION_SET_START + 1) + FUNCTION_SET_START);
-    individual[position] = primitive;
+    individual.push_back(primitive);
 
-    int child = grow_individual(individual, position + 1, length_limit, depth_limit - 1);
+    int child = grow_individual(individual, length_limit, depth_limit - 1);
 
     return child < 0
-      ? -1
-      : grow_individual(individual, child, length_limit, depth_limit - 1);
+      ? true
+      : grow_individual(individual, length_limit, depth_limit - 1);
   }
 }
