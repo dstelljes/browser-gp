@@ -30,7 +30,13 @@ TinyGP::TinyGP(const std::vector<test_case> &cases, const parameters &parameters
 }
 
 double TinyGP::calculate_fitness(const individual &individual) const {
-  return 0;
+  double result = 0;
+
+  for (auto c : cases) {
+    result -= std::abs(run_individual(individual, c) - c[0]);
+  }
+
+  return result;
 }
 
 bool TinyGP::evolve() {
