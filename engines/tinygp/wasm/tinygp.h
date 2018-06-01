@@ -1,10 +1,11 @@
 #pragma once
 
+#include <stdint.h>
 #include <vector>
 
 #include "random.h"
 
-using individual = std::vector<char16_t>;
+using individual = std::vector<uint8_t>;
 using test_case = std::vector<double>;
 
 /**
@@ -142,4 +143,5 @@ private:
 
   individual create_random_individual(int depth_limit);
   bool grow_individual(individual &individual, int length_limit, int depth_limit);
+  double run_individual(const individual &individual, const test_case &test_case) const;
 };
