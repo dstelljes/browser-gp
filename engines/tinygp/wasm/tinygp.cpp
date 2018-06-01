@@ -38,7 +38,7 @@ double TinyGP::calculate_fitness(const individual &individual) const {
   double result = 0;
 
   for (auto c : cases) {
-    result -= std::abs(run_individual(individual, c) - c[0]);
+    result += std::abs(run_individual(individual, c) - c[c.size() - 1]);
   }
 
   return result;
@@ -55,7 +55,7 @@ double TinyGP::get_average_fitness() const {
 double TinyGP::get_average_length() const {
   return std::accumulate(population.begin(), population.end(), 0, [](int r, individual i) {
     return r + i.size();
-  }) / population.size();
+  }) / (double)population.size();
 }
 
 double TinyGP::get_best_fitness() const {
@@ -83,7 +83,7 @@ individual TinyGP::create_random_individual(int depth_limit) {
 }
 
 int TinyGP::get_best_index() const {
-  return std::distance(fitnesses.begin(), std::max_element(fitnesses.begin(), fitnesses.end()));
+  return std::distance(fitnesses.begin(), std::min_element(fitnesses.begin(), fitnesses.end()));
 }
 
 bool TinyGP::grow_individual(individual &individual, int length_limit, int depth_limit) {
@@ -123,7 +123,7 @@ double TinyGP::run_individual(const individual &individual, const test_case &tes
     uint8_t primitive = individual[i];
 
     if (individual[i] < FUNCTION_SET_START) {
-      stack.push(primitive < variable_count ? test_case[primitive + 1] : constants[primitive]);
+      stack.push(primitive < variable_count ? test_case[primitive] : constants[primitive]);
       continue;
     }
 
