@@ -23,6 +23,7 @@ EMSCRIPTEN_BINDINGS(tinygp) {
     .constructor<std::vector<test_case>, parameters, long>()
     .property("averageFitness", &TinyGP::get_average_fitness)
     .property("averageLength", &TinyGP::get_average_length)
+    .property("bestFitness", &TinyGP::get_best_fitness)
     .property("bestIndividual", &TinyGP::get_best_individual)
     .property("generation", &TinyGP::get_generation)
     .property("population", &TinyGP::get_population)

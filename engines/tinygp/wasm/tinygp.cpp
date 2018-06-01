@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <cmath>
+#include <numeric>
 #include <stack>
 
 #include "tinygp.h"
@@ -25,7 +27,10 @@ TinyGP::TinyGP(const std::vector<test_case> &cases, const parameters &parameters
   }
 
   for (int i = 0; i < population_size; i++) {
-    population.push_back(create_random_individual(depth_limit));
+    individual n = create_random_individual(depth_limit);
+
+    fitnesses.push_back(calculate_fitness(n));
+    population.push_back(n);
   }
 }
 
@@ -44,15 +49,21 @@ bool TinyGP::evolve() {
 }
 
 double TinyGP::get_average_fitness() const {
-  return 0;
+  return std::accumulate(fitnesses.begin(), fitnesses.end(), 0.0) / fitnesses.size();
 }
 
 double TinyGP::get_average_length() const {
-  return 0;
+  return std::accumulate(population.begin(), population.end(), 0, [](int r, individual i) {
+    return r + i.size();
+  }) / population.size();
+}
+
+double TinyGP::get_best_fitness() const {
+  return fitnesses[get_best_index()];
 }
 
 individual TinyGP::get_best_individual() const {
-  return {};
+  return population[get_best_index()];
 }
 
 int TinyGP::get_generation() const {
@@ -69,6 +80,10 @@ individual TinyGP::create_random_individual(int depth_limit) {
   while (grow_individual(result, length_limit, depth_limit));
 
   return result;
+}
+
+int TinyGP::get_best_index() const {
+  return std::distance(fitnesses.begin(), std::max_element(fitnesses.begin(), fitnesses.end()));
 }
 
 bool TinyGP::grow_individual(individual &individual, int length_limit, int depth_limit) {

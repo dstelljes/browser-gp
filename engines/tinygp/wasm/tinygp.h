@@ -101,6 +101,12 @@ public:
 
   /**
    * @return
+   * The best fitness score.
+   */
+  double get_best_fitness() const;
+
+  /**
+   * @return
    * The individual with the best fitness score.
    */
   individual get_best_individual() const;
@@ -137,11 +143,13 @@ private:
 
   std::vector<test_case> cases;
   std::vector<double> constants = {};
+  std::vector<double> fitnesses = {};
   std::vector<individual> population = {};
 
   Random random;
 
   individual create_random_individual(int depth_limit);
+  int get_best_index() const;
   bool grow_individual(individual &individual, int length_limit, int depth_limit);
   double run_individual(const individual &individual, const test_case &test_case) const;
 };
