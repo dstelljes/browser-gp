@@ -3,7 +3,7 @@
 #include "tinygp.h"
 
 EMSCRIPTEN_BINDINGS(tinygp) {
-  emscripten::register_vector<individual>("IndividualVector");
+  emscripten::register_vector<program>("ProgramVector");
   emscripten::register_vector<test_case>("TestCaseVector");
 
   emscripten::value_object<parameters>("Parameters")
@@ -24,7 +24,7 @@ EMSCRIPTEN_BINDINGS(tinygp) {
     .property("averageFitness", &TinyGP::get_average_fitness)
     .property("averageLength", &TinyGP::get_average_length)
     .property("bestFitness", &TinyGP::get_best_fitness)
-    .property("bestIndividual", &TinyGP::get_best_individual)
+    .property("bestProgram", &TinyGP::get_best_program)
     .property("generation", &TinyGP::get_generation)
     .property("population", &TinyGP::get_population)
     .function("calculateFitness", &TinyGP::calculate_fitness)

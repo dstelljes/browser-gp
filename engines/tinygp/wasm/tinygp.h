@@ -1,11 +1,13 @@
 #pragma once
 
 #include <stdint.h>
+#include <utility>
 #include <vector>
 
 #include "random.h"
 
-using individual = std::vector<uint8_t>;
+using program = std::vector<uint8_t>;
+using scored_program = std::pair<double, program>;
 using test_case = std::vector<double>;
 
 /**
@@ -22,16 +24,16 @@ struct parameters {
   /** The minimum value of a random constant. */
   int constant_minimum;
 
-  /** The probability of creating a new individual by crossover. */
+  /** The probability of creating a new program by crossover. */
   double crossover_probability;
 
-  /** The maximum allowed depth of a generated individual. */
+  /** The maximum allowed depth of a generated program. */
   int depth_limit;
 
   /** The maximum number of generations allowed. */
   int generation_limit;
 
-  /** The maximum allowed length of any individual. */
+  /** The maximum allowed length of any program. */
   int length_limit;
 
   /** The point mutation probability. */
@@ -58,7 +60,7 @@ public:
    * Initializes a run.
    * 
    * @param cases
-   * The test cases used to rate the fitness of an individual.
+   * The test cases used to rate the fitness of an program.
    * 
    * @param parameters
    * The run parameters.
@@ -69,13 +71,13 @@ public:
   TinyGP(const std::vector<test_case> &cases, const parameters &parameters, long seed = -1);
 
   /**
-   * Calculates the fitness of an individual.
+   * Calculates the fitness of an program.
    * 
    * @return
-   * The sum of the absolute differences between the individual output and the
+   * The sum of the absolute differences between the program output and the
    * desired output.
    */
-  double calculate_fitness(const individual &individual) const;
+  double calculate_fitness(const program &program) const;
 
   /**
    * Evolves a generation.
@@ -107,9 +109,9 @@ public:
 
   /**
    * @return
-   * The individual with the best fitness score.
+   * The program with the best fitness score.
    */
-  individual get_best_individual() const;
+  program get_best_program() const;
 
   /**
    * @return
@@ -119,9 +121,9 @@ public:
 
   /**
    * @return
-   * Individuals in the population.
+   * All programs in the population.
    */
-  std::vector<individual> get_population() const;
+  std::vector<program> get_population() const;
 
 private:
   enum operations { add = 110, subtract, multiply, divide };
@@ -143,13 +145,12 @@ private:
 
   std::vector<test_case> cases;
   std::vector<double> constants = {};
-  std::vector<double> fitnesses = {};
-  std::vector<individual> population = {};
+  std::vector<scored_program> population = {};
 
   Random random;
 
-  individual create_random_individual(int depth_limit);
-  int get_best_index() const;
-  bool grow_individual(individual &individual, int length_limit, int depth_limit);
-  double run_individual(const individual &individual, const test_case &test_case) const;
+  program create_random_program(int depth_limit);
+  bool grow_program(program &program, int length_limit, int depth_limit);
+  double run_program(const program &program, const test_case &test_case) const;
+  scored_program score_program(const program &program) const;
 };

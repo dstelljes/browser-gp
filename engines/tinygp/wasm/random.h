@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /**
  * A pseudorandom number generator compatible with java.util.Random.
  */
@@ -17,7 +19,7 @@ public:
    * @param seed
    * The seed value.
    */
-  Random(unsigned long seed);
+  Random(long seed);
 
   /**
    * @return
@@ -43,21 +45,16 @@ public:
    */
   long next_long();
 
-  /**
-   * @param
-   * The new seed for the random number generator.
-   */
-  void set_seed(unsigned long seed);
-
 private:
-  static const unsigned long ADDEND = 11L;
-  static const unsigned long MASK = (1L << 48) - 1;
-  static const unsigned long MULTIPLIER = 25214903917L;
+  static const uint64_t ADDEND = 11ULL;
+  static const uint64_t MASK = (1ULL << 48) - 1;
+  static const uint64_t MULTIPLIER = 25214903917ULL;
 
-  static unsigned long get_seed_uniquifier();
-  static unsigned long scramble(unsigned long seed);
+  static uint64_t get_seed_uniquifier();
+  static uint64_t scramble(uint64_t seed);
 
-  unsigned long seed;
+  uint64_t seed;
 
-  int next(int bits);
+  uint32_t next(uint32_t bits);
+  void set_seed(uint64_t seed);
 };

@@ -5,18 +5,18 @@
 Random::Random() {
   using namespace std::chrono;
 
-  long now = high_resolution_clock::now().time_since_epoch().count();
-  long seed = get_seed_uniquifier() ^ now;
+  uint64_t now = high_resolution_clock::now().time_since_epoch().count();
+  uint64_t seed = get_seed_uniquifier() ^ now;
 
   set_seed(seed);
 }
 
-Random::Random(unsigned long seed) {
+Random::Random(long seed) {
   set_seed(seed);
 }
 
 double Random::next_double() {
-  return (((long)(next(26)) << 27) + next(27)) / (double)(1L << 53);
+  return (((uint64_t)(next(26)) << 27) + next(27)) / (double)(1ULL << 53);
 }
 
 int Random::next_int() {
@@ -28,7 +28,7 @@ int Random::next_int(int bound) {
   int m = bound - 1;
 
   if ((bound & m) == 0) {
-    r = (bound * (long)r) >> 31;
+    r = (bound * (uint64_t)r) >> 31;
   }
   else {
     int u = r;
@@ -42,23 +42,23 @@ int Random::next_int(int bound) {
 }
 
 long Random::next_long() {
-  return ((long)next(32) << 32) + next(32);
+  return ((uint64_t)next(32) << 32) + next(32);
 }
 
-void Random::set_seed(unsigned long seed) {
-  this->seed = scramble(seed);
+uint64_t Random::get_seed_uniquifier() {
+  static uint64_t uniquifier = 8682522807148012ULL;
+  return uniquifier *= 181783497276652981ULL;
 }
 
-unsigned long Random::get_seed_uniquifier() {
-  static unsigned long uniquifier = 8682522807148012L;
-  return uniquifier *= 181783497276652981L;
-}
-
-unsigned long Random::scramble(unsigned long seed) {
+uint64_t Random::scramble(uint64_t seed) {
   return (seed ^ MULTIPLIER) & MASK;
 }
 
-int Random::next(int bits) {
+uint32_t Random::next(uint32_t bits) {
   seed = (seed * MULTIPLIER + ADDEND) & MASK;
   return seed >> (48 - bits);
+}
+
+void Random::set_seed(uint64_t seed) {
+  this->seed = scramble(seed);
 }
