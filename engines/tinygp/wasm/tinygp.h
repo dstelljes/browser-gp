@@ -19,10 +19,10 @@ struct parameters {
   int constant_count;
 
   /** The maximum value of a random constant. */
-  int constant_maximum;
+  double constant_maximum;
 
   /** The minimum value of a random constant. */
-  int constant_minimum;
+  double constant_minimum;
 
   /** The probability of creating a new program by crossover. */
   double crossover_probability;
@@ -55,6 +55,11 @@ struct parameters {
  */
 class TinyGP {
 public:
+
+  /**
+   * The fitness at which a program will be considered successful.
+   */
+  static constexpr double SUCCESS_THRESHOLD = 1e-5;
 
   /**
    * Initializes a run.
@@ -149,8 +154,13 @@ private:
 
   Random random;
 
+  program combine(const program &a, const program &b);
   program create_random_program(int depth_limit);
+  int get_subtree_size(const program &program, int root);
   bool grow_program(program &program, int length_limit, int depth_limit);
+  program mutate(const program &a);
   double run_program(const program &program, const test_case &test_case) const;
   scored_program score_program(const program &program) const;
+  int select_fit_index();
+  int select_unfit_index();
 };

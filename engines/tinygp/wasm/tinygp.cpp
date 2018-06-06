@@ -42,7 +42,36 @@ double TinyGP::calculate_fitness(const program &program) const {
 }
 
 bool TinyGP::evolve() {
-  return false;
+  // the stats function in the Java version asks for an int, so do it here for
+  // compatibility:
+  random.next_int(population.size());
+
+  if (get_best_fitness() < SUCCESS_THRESHOLD) {
+    return false;
+  }
+
+  if (generation >= generation_limit - 1) {
+    return false;
+  }
+
+  for (int i = 0; i < population.size(); i++) {
+    program n;
+
+    if (random.next_double() < crossover_probability) {
+      program a = population[select_fit_index()].second;
+      program b = population[select_fit_index()].second;
+
+      n = combine(a, b);
+    }
+    else {
+      n = mutate(population[select_fit_index()].second);
+    }
+
+    population[select_unfit_index()] = score_program(n);
+  }
+
+  generation++;
+  return true;
 }
 
 double TinyGP::get_average_fitness() const {
@@ -58,11 +87,11 @@ double TinyGP::get_average_length() const {
 }
 
 double TinyGP::get_best_fitness() const {
-  return (*std::max_element(population.begin(), population.end())).first;
+  return (*std::min_element(population.begin(), population.end())).first;
 }
 
 program TinyGP::get_best_program() const {
-  return (*std::max_element(population.begin(), population.end())).second;
+  return (*std::min_element(population.begin(), population.end())).second;
 }
 
 int TinyGP::get_generation() const {
@@ -70,7 +99,7 @@ int TinyGP::get_generation() const {
 }
 
 std::vector<program> TinyGP::get_population() const {
-  std::vector<program> result = {};
+  std::vector<program> result(population.size());
 
   std::transform(population.begin(), population.end(), result.begin(), [](scored_program p) {
     return p.second;
@@ -79,12 +108,35 @@ std::vector<program> TinyGP::get_population() const {
   return result;
 }
 
+program TinyGP::combine(const program &a, const program &b) {
+  program n = a;
+
+  int position = random.next_int(a.size());
+  int graft = random.next_int(b.size());
+
+  n.erase(n.begin() + position, n.begin() + position + get_subtree_size(n, position));
+  n.insert(n.begin() + position, b.begin() + graft, b.begin() + graft + get_subtree_size(b, graft));
+
+  return n;
+}
+
 program TinyGP::create_random_program(int depth_limit) {
   program result = {};
 
   while (grow_program(result, length_limit, depth_limit));
 
   return result;
+}
+
+int TinyGP::get_subtree_size(const program &program, int root) {
+  int count = 0, end = root;
+
+  do {
+    count += program[end] < FUNCTION_SET_START ? -1 : 1;
+    end++;
+  } while (count > -1);
+
+  return end - root;
 }
 
 bool TinyGP::grow_program(program &program, int length_limit, int depth_limit) {
@@ -115,6 +167,20 @@ bool TinyGP::grow_program(program &program, int length_limit, int depth_limit) {
       ? true
       : grow_program(program, length_limit, depth_limit - 1);
   }
+}
+
+program TinyGP::mutate(const program &a) {
+  program n = a;
+
+  for (int i = 0; i < n.size(); i++) {
+    if (random.next_double() < mutation_probability) {
+      n[i] = n[i] < FUNCTION_SET_START
+        ? random.next_int(constant_count + variable_count)
+        : random.next_int(FUNCTION_SET_END - FUNCTION_SET_START + 1) + FUNCTION_SET_START;
+    }
+  }
+
+  return n;
 }
 
 double TinyGP::run_program(const program &program, const test_case &test_case) const {
@@ -158,4 +224,38 @@ double TinyGP::run_program(const program &program, const test_case &test_case) c
 
 std::pair<double, program> TinyGP::score_program(const program &program) const {
   return std::make_pair(calculate_fitness(program), program);
+}
+
+int TinyGP::select_fit_index() {
+  double min = 100000;
+  int result = random.next_int(population.size());
+
+  for (int i = 0; i < tournament_size; i++) {
+    int competitor = random.next_int(population.size());
+    double fitness = population[competitor].first;
+
+    if (min > fitness) {
+      min = fitness;
+      result = competitor;
+    }
+  }
+
+  return result;
+}
+
+int TinyGP::select_unfit_index() {
+  double max = -1;
+  int result = random.next_int(population.size());
+
+  for (int i = 0; i < tournament_size; i++) {
+    int competitor = random.next_int(population.size());
+    double fitness = population[competitor].first;
+
+    if (max < fitness) {
+      max = fitness;
+      result = competitor;
+    }
+  }
+
+  return result;
 }
