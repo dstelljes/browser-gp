@@ -3,7 +3,9 @@
 #include "tinygp.h"
 
 EMSCRIPTEN_BINDINGS(tinygp) {
+  emscripten::register_vector<uint8_t>("Program");
   emscripten::register_vector<program>("ProgramVector");
+  emscripten::register_vector<double>("TestCase");
   emscripten::register_vector<test_case>("TestCaseVector");
 
   emscripten::value_object<parameters>("Parameters")
