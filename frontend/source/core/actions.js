@@ -1,0 +1,1 @@
+export const CREATE_SOLUTION = 'CREATE_SOLUTION'
