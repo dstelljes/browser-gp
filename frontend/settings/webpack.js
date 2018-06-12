@@ -12,6 +12,17 @@ module.exports = {
   mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
   module: {
     rules: [{
+      test: /\.c(pp)?$/,
+      use: {
+        loader: 'cpp-wasm-loader',
+        options: {
+          emccFlags: [
+            '--bind',
+            '-O3'
+          ]
+        }
+      }
+    }, {
       exclude: /node_modules/,
       test: /\.jsx?$/,
       use: {
@@ -29,6 +40,9 @@ module.exports = {
       }
     }]
   },
+  node: {
+    fs: 'empty'
+  },
   output: {
     path: path.resolve(__dirname, '../release')
   },
@@ -39,6 +53,9 @@ module.exports = {
     })
   ],
   resolve: {
+    alias: {
+      engines: path.resolve(__dirname, '../../engines')
+    },
     extensions: ['.js', '.json', '.jsx']
   }
 }

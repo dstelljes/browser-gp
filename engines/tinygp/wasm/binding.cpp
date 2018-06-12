@@ -1,6 +1,7 @@
 #include <emscripten/bind.h>
 
-#include "tinygp.h"
+#include "random.cpp"
+#include "tinygp.cpp"
 
 EMSCRIPTEN_BINDINGS(tinygp) {
   emscripten::register_vector<uint8_t>("Program");
