@@ -1,10 +1,9 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
+import { CREATE_SOLUTION } from '../data/actions'
 import { createRandomId } from '../utilities/id'
 import { connect } from '../utilities/router'
-
-import { CREATE_SOLUTION } from './actions'
 
 const mapDispatchToProps = dispatch => {
   return {

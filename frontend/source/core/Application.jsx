@@ -6,7 +6,7 @@ import { HashRouter } from 'react-router-dom'
 import { createStore } from 'redux'
 
 import { NavigationContainer } from './NavigationContainer'
-import { rootReducer } from './reducers'
+import { rootReducer } from '../data/reducers'
 import { theme } from '../ui/theme'
 
 const store = createStore(rootReducer)

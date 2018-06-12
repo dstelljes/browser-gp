@@ -4,7 +4,7 @@ import { connect } from '../utilities/router'
 
 const mapStateToProps = state => {
   return {
-    solutions: state.solution.library
+    solutions: state.solutions
   }
 }
 

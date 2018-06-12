@@ -17,7 +17,7 @@ module.exports = {
       use: {
         loader: 'babel-loader',
         options: {
-          plugins: ['emotion', 'react-hot-loader/babel'],
+          plugins: ['emotion', 'react-hot-loader/babel', 'transform-object-rest-spread'],
           presets: [['env', {
             targets: {
               chrome: 54,

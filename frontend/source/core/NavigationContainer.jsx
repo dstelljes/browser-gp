@@ -12,33 +12,40 @@ import { SolutionRoute } from './SolutionRoute'
 
 const Main = styled.div`
   background-color: ${({ theme }) => theme.pageBackgroundColor};
-  font-family: ${({ theme }) => theme.bodyFontFamily};
   height: 100%;
   left: 0;
-  overflow: auto;
+  overflow-y: auto;
+  padding: 1.5em;
   position: fixed;
   top: 0;
-  transform: ${({ inset }) => inset ? 'scale(0.9) translateX(16em)' : 'none'};
+  transform: ${({ inset, theme }) => inset
+    ? `scale(0.9) translateX(${theme.menuWidth})`
+    : 'none'
+  };
   transition: transform ${({ theme }) => theme.largeAnimationDuration};
   width: 100%;
 `
 
 const Navigation = styled.div`
   font-size: 125%;
+  padding: 4em 1em;
+  width: ${({ theme }) => theme.menuWidth};
 `
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.applicationBackgroundColor};
   font-size: ${({ theme }) => theme.baseSize};
+  font-family: ${({ theme }) => theme.bodyFontFamily};
   height: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
   width: 100%;
 `
 
 const mapStateToProps = state => {
   return {
-    menuExpanded: state.navigation.menuExpanded,
-    solutions: state.solution.library
+    menuExpanded: state.ui.menuExpanded,
+    solutions: state.solutions
   }
 }
 
