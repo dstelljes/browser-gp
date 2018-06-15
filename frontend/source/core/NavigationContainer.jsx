@@ -20,8 +20,7 @@ const Main = styled.div`
   top: 0;
   transform: ${({ inset, theme }) => inset
     ? `scale(0.9) translateX(${theme.menuWidth})`
-    : 'none'
-  };
+    : 'none'};
   transition: transform ${({ theme }) => theme.largeAnimationDuration};
   width: 100%;
 `

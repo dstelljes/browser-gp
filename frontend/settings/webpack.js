@@ -44,6 +44,7 @@ module.exports = {
     fs: 'empty'
   },
   output: {
+    globalObject: 'self',
     path: path.resolve(__dirname, '../release')
   },
   plugins: [
