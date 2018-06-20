@@ -1,1 +1,3 @@
+export const CREATE_RUN = 'CREATE_RUN'
 export const CREATE_SOLUTION = 'CREATE_SOLUTION'
+export const TOGGLE_MENU = 'TOGGLE_MENU'

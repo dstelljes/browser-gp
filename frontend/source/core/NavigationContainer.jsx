@@ -1,14 +1,23 @@
 import React from 'react'
 import styled from 'react-emotion'
-import { Route, Switch } from 'react-router-dom'
+import { NavLink, Route, Switch } from 'react-router-dom'
 
 import { connect } from '../utilities/router'
 
 import { LandingRoute } from './LandingRoute'
 import { NewSolutionRoute } from './NewSolutionRoute'
 import { NotFoundRoute } from './NotFoundRoute'
-import { SolutionList } from './SolutionList'
 import { SolutionRoute } from './SolutionRoute'
+
+const LinkItem = styled.li`
+
+`
+
+const LinkList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`
 
 const Main = styled.div`
   background-color: ${({ theme }) => theme.pageBackgroundColor};
@@ -26,7 +35,11 @@ const Main = styled.div`
 `
 
 const Navigation = styled.div`
+  display: flex;
+  flex-direction: column;
   font-size: 125%;
+  min-height: 100%;
+  justify-content: space-between;
   padding: 4em 1em;
   width: ${({ theme }) => theme.menuWidth};
 `
@@ -55,7 +68,19 @@ export const NavigationContainer = connect(
   return (
     <Wrapper>
       <Navigation>
-        <SolutionList solutions={solutions} />
+        <LinkList>
+          {solutions.map(solution =>
+            <LinkItem key={solution.id}>
+              <NavLink to={`/solution/${solution.id}`}>{solution.id}</NavLink>
+            </LinkItem>
+          )}
+        </LinkList>
+
+        <LinkList>
+          <LinkItem>
+            <NavLink to='/'>Create a new solution</NavLink>
+          </LinkItem>
+        </LinkList>
       </Navigation>
 
       <Main inset={menuExpanded}>
