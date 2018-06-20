@@ -1,3 +1,0 @@
-export const COMPLETION = 'COMPLETION'
-export const GENERATION = 'GENERATION'
-export const INITIALIZATION = 'INITIALIZATION'

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs'
 
-import { COMPLETION, GENERATION, INITIALIZATION } from './messages'
-import Worker from 'worker-loader!./worker'
+import { COMPLETION, GENERATION, INITIALIZATION } from './constants'
+import Worker from './worker'
 
 export const createRunner = function (cases = [], parameters = {}, seed = -1) {
   return Observable.create(observer => {

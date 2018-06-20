@@ -2,7 +2,7 @@
 
 import binding from 'engines/tinygp/wasm/binding.cpp'
 
-import { COMPLETION, GENERATION, INITIALIZATION } from './messages'
+import { COMPLETION, GENERATION, INITIALIZATION } from './constants'
 
 const module = binding.initialize()
 
@@ -15,20 +15,6 @@ const run = (cases, parameters, seed) => {
       }, new TestCase()))
       return cv
     }, new TestCaseVector())
-
-    parameters = Object.assign({
-      constantCount: 4,
-      constantMaximum: 5,
-      constantMinimum: -5,
-      crossoverProbability: 0.9,
-      depthLimit: 5,
-      generationLimit: 100,
-      lengthLimit: 10000,
-      mutationProbability: 0.05,
-      populationSize: 100000,
-      tournamentSize: 2,
-      variableCount: 1
-    }, parameters)
 
     const gp = new TinyGP(cases, parameters, seed)
 

@@ -23,6 +23,11 @@ module.exports = {
         }
       }
     }, {
+      test: /^worker\.js$/,
+      use: {
+        loader: 'worker-loader'
+      }
+    }, {
       exclude: /node_modules/,
       test: /\.jsx?$/,
       use: {
