@@ -1,4 +1,4 @@
-import { CREATE_RUN, CREATE_SOLUTION, TOGGLE_MENU } from './actions'
+import { CREATE_RUN, CREATE_SOLUTION, TOGGLE_MENU, REPORT_GENERATION, SET_RUNNER_ACTIVE, SET_RUNNER_FAILED, SET_RUNNER_FINISHED } from './actions'
 import { defaultParameters as tinygpDefaults } from '../tinygp/constants'
 
 const initialState = {
@@ -9,12 +9,13 @@ const initialState = {
 }
 
 export const rootReducer = (state = initialState, action) => {
+  console.log(action)
   switch (action.type) {
     case CREATE_RUN:
       return { ...state,
         solutions: state.solutions.map(solution => {
           if (solution.id !== action.solution) {
-            return
+            return solution
           }
 
           const run = {
@@ -46,6 +47,106 @@ export const rootReducer = (state = initialState, action) => {
             runs: []
           }
         ]
+      }
+
+    case REPORT_GENERATION:
+      return { ...state,
+        solutions: state.solutions.map(solution => {
+          if (solution.id !== action.solution) {
+            return solution
+          }
+
+          return { ...solution,
+            runs: solution.runs.map((run, index) => {
+              if (index !== action.run) {
+                return run
+              }
+
+              return { ...run,
+                generations: [ ...run.generations,
+                  {
+                    averageFitness: action.averageFitness,
+                    averageLength: action.averageLength,
+                    bestFitness: action.bestFitness
+                  }
+                ]
+              }
+            })
+          }
+        })
+      }
+
+    case SET_RUNNER_ACTIVE:
+      return { ...state,
+        solutions: state.solutions.map(solution => {
+          if (solution.id !== action.solution) {
+            return solution
+          }
+
+          return { ...solution,
+            runs: solution.runs.map((run, index) => {
+              if (index !== action.run) {
+                return run
+              }
+
+              return { ...run,
+                generations: [],
+                runner: {
+                  error: null,
+                  subscription: action.subscription
+                }
+              }
+            })
+          }
+        })
+      }
+
+    case SET_RUNNER_FAILED:
+      return { ...state,
+        solutions: state.solutions.map(solution => {
+          if (solution.id !== action.solution) {
+            return solution
+          }
+
+          return { ...solution,
+            runs: solution.runs.map((run, index) => {
+              if (index !== action.run) {
+                return run
+              }
+
+              return { ...run,
+                runner: { ...run.runner,
+                  error: action.error,
+                  subscription: null
+                }
+              }
+            })
+          }
+        })
+      }
+
+    case SET_RUNNER_FINISHED:
+      return { ...state,
+        solutions: state.solutions.map(solution => {
+          if (solution.id !== action.solution) {
+            return solution
+          }
+
+          return { ...solution,
+            runs: solution.runs.map((run, index) => {
+              if (index !== action.run) {
+                return run
+              }
+
+              return { ...run,
+                runner: { ...run.runner,
+                  error: null,
+                  subscription: null
+                }
+              }
+            })
+          }
+        })
       }
 
     case TOGGLE_MENU:

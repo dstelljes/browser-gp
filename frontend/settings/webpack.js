@@ -23,7 +23,7 @@ module.exports = {
         }
       }
     }, {
-      test: /^worker\.js$/,
+      test: /worker\.js$/,
       use: {
         loader: 'worker-loader'
       }

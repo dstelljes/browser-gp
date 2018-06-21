@@ -5,7 +5,7 @@ import Worker from './worker'
 
 export const createRunner = function (cases = [], parameters = {}, seed = -1) {
   return Observable.create(observer => {
-    const worker = new Worker('worker.js')
+    const worker = new Worker()
 
     worker.addEventListener('error', event => {
       observer.error(event)
