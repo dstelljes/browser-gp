@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { PageTitle } from '../core/PageTitle'
-import { CREATE_RUN, REPORT_GENERATION, SET_RUNNER_ACTIVE, SET_RUNNER_FAILED, SET_RUNNER_FINISHED } from '../data/actions'
+import { CREATE_RUN, REPORT_GENERATION, SET_RUNNER_ACTIVE, SET_RUNNER_FAILED, SET_RUNNER_FINISHED, UPDATE_PARAMETERS } from '../data/actions'
+import { ParametersForm } from '../tinygp/ParametersForm'
 import { createRunner } from '../tinygp/runner'
 import { connect } from '../utilities/router'
 
@@ -40,7 +41,13 @@ const mapDispatchToProps = dispatch => {
         subscription: subscription,
         type: SET_RUNNER_ACTIVE
       })
-    }
+    },
+    updateParameters: (solution, run, index) => value => dispatch({
+      run: index,
+      solution: solution.id,
+      type: UPDATE_PARAMETERS,
+      value: value
+    })
   }
 }
 
@@ -53,7 +60,7 @@ const mapStateToProps = state => {
 export const SolutionRoute = connect(
   mapStateToProps,
   mapDispatchToProps
-)(function ({ createRun, match, solutions, startRunner }) {
+)(function ({ createRun, match, solutions, startRunner, updateParameters }) {
   const solution = solutions.find(s => s.id === match.params.id)
 
   if (!solution) {
@@ -80,32 +87,12 @@ export const SolutionRoute = connect(
           {solution.runs.map((run, index) =>
             <section key={index}>
               <h2>Run {index}</h2>
-              <dl>
-                <dt>Constant count</dt>
-                <dd>{run.parameters.constantCount}</dd>
-                <dt>Constant range</dt>
-                <dd>[{run.parameters.constantMinimum}, {run.parameters.constantMaximum}]</dd>
-                <dt>Crossover probability</dt>
-                <dd>{run.parameters.crossoverProbability}</dd>
-                <dt>Depth limit</dt>
-                <dd>{run.parameters.depthLimit}</dd>
-                <dt>Generation limit</dt>
-                <dd>{run.parameters.generationLimit}</dd>
-                <dt>Point mutation probability</dt>
-                <dd>{run.parameters.mutationProbability}</dd>
-                <dt>Population size</dt>
-                <dd>{run.parameters.populationSize}</dd>
-                <dt>Program length limit</dt>
-                <dd>{run.parameters.lengthLimit}</dd>
-                <dt>Tournament size</dt>
-                <dd>{run.parameters.tournamentSize}</dd>
-              </dl>
+
+              <ParametersForm onChange={updateParameters(solution, run, index)} value={run.parameters} />
 
               <button onClick={startRunner(solution, run, index)}>
                 Start run
               </button>
-
-              {run.generations.length}
 
               {run.generations.map((generation, index) =>
                 <div key={index}>
