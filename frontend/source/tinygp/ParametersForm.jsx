@@ -1,11 +1,11 @@
 import React from 'react'
 
 export const ParametersForm = function ({ onChange, value }) {
-  const BoundInput = function({ min = -Infinity, max = Infinity, name, step = 1 }) {
+  const BoundInput = function ({ min = -Infinity, max = Infinity, name, step = 1 }) {
     const handleChange = event => onChange({ ...value,
       [name]: Number(event.target.value)
     })
-  
+
     return (
       <input onChange={handleChange} type='number' min={min} max={max} step={step} value={value[name]} />
     )

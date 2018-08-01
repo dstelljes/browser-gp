@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { PageTitle } from '../core/PageTitle'
-import { CREATE_RUN, REPORT_GENERATION, SET_RUNNER_ACTIVE, SET_RUNNER_FAILED, SET_RUNNER_FINISHED, UPDATE_PARAMETERS } from '../data/actions'
+import { CREATE_RUN, REPORT_GENERATION, SET_RUNNER_ACTIVE, SET_RUNNER_FAILED, SET_RUNNER_FINISHED, UPDATE_CASES, UPDATE_PARAMETERS } from '../data/actions'
+import { CasesForm } from '../tinygp/CasesForm'
 import { ParametersForm } from '../tinygp/ParametersForm'
 import { createRunner } from '../tinygp/runner'
 import { connect } from '../utilities/router'
@@ -13,7 +14,7 @@ const mapDispatchToProps = dispatch => {
       type: CREATE_RUN
     }),
     startRunner: (solution, run, index) => () => {
-      const subscription = createRunner([], run.parameters).subscribe(
+      const subscription = createRunner(solution.cases, run.parameters).subscribe(
         generation => dispatch({
           averageFitness: generation.averageFitness,
           averageLength: generation.averageLength,
@@ -42,7 +43,12 @@ const mapDispatchToProps = dispatch => {
         type: SET_RUNNER_ACTIVE
       })
     },
-    updateParameters: (solution, run, index) => value => dispatch({
+    updateCases: solution => value => dispatch({
+      solution: solution.id,
+      type: UPDATE_CASES,
+      value: value
+    }),
+    updateParameters: (solution, index) => value => dispatch({
       run: index,
       solution: solution.id,
       type: UPDATE_PARAMETERS,
@@ -60,7 +66,7 @@ const mapStateToProps = state => {
 export const SolutionRoute = connect(
   mapStateToProps,
   mapDispatchToProps
-)(function ({ createRun, match, solutions, startRunner, updateParameters }) {
+)(function ({ createRun, match, solutions, startRunner, updateCases, updateParameters }) {
   const solution = solutions.find(s => s.id === match.params.id)
 
   if (!solution) {
@@ -84,11 +90,13 @@ export const SolutionRoute = connect(
             {solution.name || 'Untitled solution'}
           </PageTitle>
 
+          <CasesForm onChange={updateCases(solution)} value={solution.cases} />
+
           {solution.runs.map((run, index) =>
             <section key={index}>
               <h2>Run {index}</h2>
 
-              <ParametersForm onChange={updateParameters(solution, run, index)} value={run.parameters} />
+              <ParametersForm onChange={updateParameters(solution, index)} value={run.parameters} />
 
               <button onClick={startRunner(solution, run, index)}>
                 Start run

@@ -1,4 +1,4 @@
-import { CREATE_RUN, CREATE_SOLUTION, REPORT_GENERATION, SET_RUNNER_ACTIVE, SET_RUNNER_FAILED, SET_RUNNER_FINISHED, TOGGLE_MENU, UPDATE_PARAMETERS } from './actions'
+import { CREATE_RUN, CREATE_SOLUTION, REPORT_GENERATION, SET_RUNNER_ACTIVE, SET_RUNNER_FAILED, SET_RUNNER_FINISHED, TOGGLE_MENU, UPDATE_CASES, UPDATE_PARAMETERS } from './actions'
 import { defaultParameters as tinygpDefaults } from '../tinygp/constants'
 
 const initialState = {
@@ -39,6 +39,7 @@ export const rootReducer = (state = initialState, action) => {
       return { ...state,
         solutions: [ ...state.solutions,
           {
+            cases: [[0, 0]],
             created: new Date(),
             engine: action.engine,
             id: action.id,
@@ -153,6 +154,19 @@ export const rootReducer = (state = initialState, action) => {
         ui: { ...state.ui,
           menuExpanded: !state.ui.menuExpanded
         }
+      }
+
+    case UPDATE_CASES:
+      return { ...state,
+        solutions: state.solutions.map(solution => {
+          if (solution.id !== action.solution) {
+            return solution
+          }
+
+          return { ...solution,
+            cases: action.value
+          }
+        })
       }
 
     case UPDATE_PARAMETERS:
