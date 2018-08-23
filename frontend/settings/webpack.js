@@ -18,7 +18,8 @@ module.exports = {
         options: {
           emccFlags: [
             '--bind',
-            '-O3'
+            '-O3',
+            '-s', 'ALLOW_MEMORY_GROWTH=1'
           ]
         }
       }
